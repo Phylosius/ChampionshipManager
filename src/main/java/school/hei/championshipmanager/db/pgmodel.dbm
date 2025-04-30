@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="18"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="536,-2" last-zoom="1" scene-rect="-160,-680,1896.88,2153.32"
+	 last-position="0,-20" last-zoom="1" scene-rect="0,-20,1661.45,1322.52"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -52,14 +52,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="country_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
-<constraint name="championship_name_uk" type="uq-constr" table="public.championship">
-	<columns names="name" ref-type="src-columns"/>
-</constraint>
-
-<constraint name="championship_pk" type="pk-constr" table="public.championship">
-	<columns names="id" ref-type="src-columns"/>
-</constraint>
-
+	<constraint name="championship_name_uk" type="uq-constr" table="public.championship">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="championship_pk" type="pk-constr" table="public.championship">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <extension name="uuid-ossp">
@@ -69,7 +67,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="country" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="460" y="480"/>
+	<position x="760" y="120"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -92,7 +90,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="club" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="880" y="0"/>
+	<position x="1000" y="0"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -133,7 +131,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="coach" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="920" y="460"/>
+	<position x="1020" y="460"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -155,7 +153,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="player" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="1020" y="780"/>
+	<position x="860" y="600"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -190,9 +188,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="player_number" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
-	<constraint name="player_number_uk" type="uq-constr" table="public.player_number">
-		<columns names="player_number" ref-type="src-columns"/>
-	</constraint>
+<constraint name="player_number_uk" type="uq-constr" table="public.player_number">
+	<columns names="player_number" ref-type="src-columns"/>
+</constraint>
+
 	<constraint name="player_number_pk" type="pk-constr" table="public.player_number">
 		<columns names="player_id,club_id" ref-type="src-columns"/>
 	</constraint>
@@ -206,10 +205,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<enumeration label="FINISHED"/>
 </usertype>
 
-<table name="season_championship" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+<table name="season_championship" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="-140" y="0"/>
+	<position x="820" y="320"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -232,7 +231,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="season" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="-20" y="440"/>
+	<position x="1280" y="120"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -259,7 +258,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="match" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="420" y="-440"/>
+	<position x="440" y="720"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -295,7 +294,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="match_stats" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="-100" y="-420"/>
+	<position x="960" y="1100"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -327,7 +326,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="player_stats" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="980" y="-440"/>
+	<position x="920" y="840"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
