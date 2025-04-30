@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="18"
+	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
+	 last-position="536,-2" last-zoom="1" scene-rect="-160,-680,1896.88,2153.32"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<role name="championship_manager_user"
+ createdb="true"
+ replication="true"
+ inherit="true"
+ login="true"
+ password="********">
+</role>
+
+<database name="championship_manager" is-template="false" allow-conns="true">
+	<role name="championship_manager_user"/>
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<usertype name="CONTINENT_TYPE" configuration="enumeration">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<enumeration label="AFRICA"/>
+	<enumeration label="ANTARCTICA"/>
+	<enumeration label="ASIA"/>
+	<enumeration label="OCEANIA"/>
+	<enumeration label="EUROPE"/>
+	<enumeration label="NORTH_AMERICA"/>
+	<enumeration label="SOUTH_AMERICA"/>
+</usertype>
+
+<table name="championship" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="420" y="0"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="country_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+<constraint name="championship_name_uk" type="uq-constr" table="public.championship">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="championship_pk" type="pk-constr" table="public.championship">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<extension name="uuid-ossp">
+	<schema name="public"/>
+</extension>
+
+<table name="country" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="460" y="480"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="continent" default-value="EUROPE">
+		<type name="public.&quot;CONTINENT_TYPE&quot;" length="0"/>
+	</column>
+<constraint name="country_name_uk" type="uq-constr" table="public.country">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="country_pk" type="pk-constr" table="public.country">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="club" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="880" y="0"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="creation_year" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="acronym" not-null="true">
+		<type name="varchar" length="3"/>
+	</column>
+	<column name="stadium_name" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="championship_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+<constraint name="club_name_uk" type="uq-constr" table="public.club">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="club_pk" type="pk-constr" table="public.club">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<usertype name="PLAYER_POSITION" configuration="enumeration">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<enumeration label="STRIKER"/>
+	<enumeration label="MIDFIELDER"/>
+	<enumeration label="DEFENSE"/>
+	<enumeration label="GOAL_KEEPER"/>
+</usertype>
+
+<table name="coach" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="920" y="460"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="nationality" alias="country_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="club_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+<constraint name="coach_pk" type="pk-constr" table="public.coach">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="player" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="1020" y="780"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="position" not-null="true">
+		<type name="public.&quot;PLAYER_POSITION&quot;" length="0"/>
+	</column>
+	<column name="age" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nationality" alias="country_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+<constraint name="player_pk" type="pk-constr" table="public.player">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="player_number" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="1480" y="280"/>
+	<column name="club_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="player_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="player_number" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="player_number_uk" type="uq-constr" table="public.player_number">
+		<columns names="player_number" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="player_number_pk" type="pk-constr" table="public.player_number">
+		<columns names="player_id,club_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<usertype name="EVENT_STATUS" configuration="enumeration">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<enumeration label="NOT_STARTED"/>
+	<enumeration label="STARTED"/>
+	<enumeration label="FINISHED"/>
+</usertype>
+
+<table name="season_championship" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="-140" y="0"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="season_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="championship_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+<constraint name="season_championship_uk" type="uq-constr" table="public.season_championship">
+	<columns names="season_id,championship_id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="season_championship_pk" type="pk-constr" table="public.season_championship">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="season" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="-20" y="440"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="year" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="status" default-value="NOT_STARTED">
+		<type name="public.&quot;EVENT_STATUS&quot;" length="0"/>
+	</column>
+<constraint name="season_pk" type="pk-constr" table="public.season">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<usertype name="MATCH_STATUS" configuration="enumeration">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<enumeration label="DRAW"/>
+	<enumeration label="HOME_WIN"/>
+	<enumeration label="AWAY_WIN"/>
+</usertype>
+
+<table name="match" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="420" y="-440"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="season_championship_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="home_club_id" alias="home_club" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="away_club_id" alias="away_club" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="date" default-value="null">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="status" default-value="NOT_STARTED">
+		<type name="public.&quot;EVENT_STATUS&quot;" length="0"/>
+	</column>
+<constraint name="match_clubs_ck" type="ck-constr" table="public.match">
+	<expression> <![CDATA[host_team_id <> guest_team_id]]> </expression>
+</constraint>
+
+<constraint name="match_uk" type="uq-constr" table="public.match">
+	<columns names="season_championship_id,home_club_id,away_club_id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="match_pk" type="pk-constr" table="public.match">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="match_stats" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="-100" y="-420"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="match_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="goals_conceded_by_home" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="goals_conceded_by_away" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="goals_scored_by_home" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="goals_scored_by_away" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+<constraint name="match_stats_uk" type="uq-constr" table="public.match_stats">
+	<columns names="match_id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="match_stats_pk" type="pk-constr" table="public.match_stats">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<table name="player_stats" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="championship_manager_user"/>
+	<position x="980" y="-440"/>
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="match_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="player_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="goals_scored" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="goals_conceded" default-value="null">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="playing_time" default-value="null">
+		<type name="integer" length="0"/>
+		<comment> <![CDATA[in seconds]]> </comment>
+	</column>
+<constraint name="player_stats_uk" type="uq-constr" table="public.player_stats">
+	<columns names="match_id,player_id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="player_stats_pk" type="pk-constr" table="public.player_stats">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+</table>
+
+<constraint name="championship_country_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.country" table="public.championship">
+	<columns names="country_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="club_championship_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.championship" table="public.club">
+	<columns names="championship_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="coach_nationality_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.country" table="public.coach">
+	<columns names="nationality" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="coach_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.coach">
+	<columns names="club_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="player_nationality_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.country" table="public.player">
+	<columns names="nationality" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="player_number_player_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.player" table="public.player_number">
+	<columns names="player_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="player_number_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.player_number">
+	<columns names="club_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="season_championship_season_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.season" table="public.season_championship">
+	<columns names="season_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="season_championship_championship_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.championship" table="public.season_championship">
+	<columns names="championship_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="match_season_championship_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.season_championship" table="public.match">
+	<columns names="season_championship_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="match_home_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.match">
+	<columns names="home_club_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="match_away_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.match">
+	<columns names="away_club_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="match_stats_match_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.match" table="public.match_stats">
+	<columns names="match_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="player_stats_match_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.match" table="public.player_stats">
+	<columns names="match_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="player_stats_player_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.player" table="public.player_stats">
+	<columns names="player_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_championship_country" type="relfk" layers="0"
+	 src-table="public.championship"
+	 dst-table="public.country" reference-fk="championship_country_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_club_championship" type="relfk" layers="0"
+	 src-table="public.club"
+	 dst-table="public.championship" reference-fk="club_championship_id"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_trainer_country" type="relfk" layers="0"
+	 src-table="public.coach"
+	 dst-table="public.country" reference-fk="coach_nationality_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_player_country" type="relfk" layers="0"
+	 src-table="public.player"
+	 dst-table="public.country" reference-fk="player_nationality_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_player_number_player" type="relfk" layers="0"
+	 src-table="public.player_number"
+	 dst-table="public.player" reference-fk="player_number_player_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_player_number_club" type="relfk" layers="0"
+	 src-table="public.player_number"
+	 dst-table="public.club" reference-fk="player_number_club_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_coach_club" type="relfk" layers="0"
+	 src-table="public.coach"
+	 dst-table="public.club" reference-fk="coach_club_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_season_championship_season" type="relfk" layers="0"
+	 src-table="public.season_championship"
+	 dst-table="public.season" reference-fk="season_championship_season_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_season_championship_championship" type="relfk" layers="0"
+	 src-table="public.season_championship"
+	 dst-table="public.championship" reference-fk="season_championship_championship_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_club" type="relfk" layers="0"
+	 src-table="public.match"
+	 dst-table="public.club" reference-fk="match_home_club_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_club1" type="relfk" layers="0"
+	 src-table="public.match"
+	 dst-table="public.club" reference-fk="match_away_club_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_season_championship" type="relfk" layers="0"
+	 src-table="public.match"
+	 dst-table="public.season_championship" reference-fk="match_season_championship_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_player_stats_player" type="relfk" layers="0"
+	 src-table="public.player_stats"
+	 dst-table="public.player" reference-fk="player_stats_player_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_player_stats_match" type="relfk" layers="0"
+	 src-table="public.player_stats"
+	 dst-table="public.match" reference-fk="player_stats_match_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_stats_match" type="relfk" layers="0"
+	 src-table="public.match_stats"
+	 dst-table="public.match" reference-fk="match_stats_match_id_fk"
+	 src-required="false" dst-required="true"/>
+
+</dbmodel>
