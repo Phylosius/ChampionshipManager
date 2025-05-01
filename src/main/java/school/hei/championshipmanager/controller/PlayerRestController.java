@@ -26,7 +26,7 @@ public class PlayerRestController {
      * @return List of players with their clubs
      */
     @GetMapping
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<?> getPlayers(
             @RequestParam(name = "name", required = false) String nameContaining,
             @RequestParam(name = "clubName", required = false) String clubName,
             @RequestParam(name = "ageMinimum", required = false) Integer ageMin,
@@ -42,7 +42,7 @@ public class PlayerRestController {
      * @return List of created or updated players
      */
     @PutMapping
-    public ResponseEntity<?> saveAll(
+    public ResponseEntity<?> createOrUpdatePlayers(
         @RequestBody List<PlayerRest> players
     ) {
         return ResponseEntity.status(501).body("Not implemented yet");
