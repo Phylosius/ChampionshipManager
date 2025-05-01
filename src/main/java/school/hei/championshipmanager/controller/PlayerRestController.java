@@ -1,9 +1,11 @@
 package school.hei.championshipmanager.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,22 @@ public class PlayerRestController {
     @PutMapping
     public ResponseEntity<?> createOrUpdatePlayers(
         @RequestBody List<PlayerRest> players
+    ) {
+        return ResponseEntity.status(501).body("Not implemented yet");
+    }
+
+    /**
+     * Get statistics for a specific player
+     * 
+     * Important ! Note that own goals are not considered as goal inside goals scored.
+     * @param id The id of the player to get statistics for
+     * @param seasonYear The date of the season to get statistics for
+     * @return Player statistics
+     */
+    @GetMapping("/{id}/statistics/{seasonYear}")
+    public ResponseEntity<?> getStatisticsOfPlayerById(
+            @PathVariable String id,
+            @PathVariable LocalDate seasonYear
     ) {
         return ResponseEntity.status(501).body("Not implemented yet");
     }
