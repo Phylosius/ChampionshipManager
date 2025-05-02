@@ -442,7 +442,7 @@ components:
       name: seasonYear
       schema:
         type: string
-        format: date
+        pattern: '^\d{4}$'
       required: true
   responses:
     NotFoundResponse:

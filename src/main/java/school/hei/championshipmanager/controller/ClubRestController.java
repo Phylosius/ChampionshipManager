@@ -1,6 +1,5 @@
 package school.hei.championshipmanager.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -87,7 +86,7 @@ public class ClubRestController {
      */
     @GetMapping("/statistics/{seasonYear}")
     public ResponseEntity<?> getStatistics(
-        @PathVariable LocalDate seasonYear,
+        @PathVariable Integer seasonYear,
         @RequestParam(required = false) Boolean hasToBeClassified
     ) {
         return ResponseEntity.status(501).body("Not implemented.");

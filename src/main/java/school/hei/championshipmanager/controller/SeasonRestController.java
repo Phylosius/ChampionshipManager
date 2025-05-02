@@ -51,7 +51,7 @@ public class SeasonRestController {
      */
     @PutMapping("/{seasonYear}/status")
     public ResponseEntity<?> updateSeasonStatus(
-        @PathVariable LocalDate seasonYear
+        @PathVariable Integer seasonYear
     ) {
         return ResponseEntity.status(501).body("Not implemented.");
     }

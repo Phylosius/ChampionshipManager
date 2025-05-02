@@ -1,7 +1,5 @@
 package school.hei.championshipmanager.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,11 +31,11 @@ public class MatchRestController {
      */
     @GetMapping("/{seasonYear}")
     public ResponseEntity<?> getAllBySeason(
-        @PathVariable LocalDate seasonDate,
+        @PathVariable Integer seasonDate,
         @RequestParam(required = false) EventStatus matchStatus,
         @RequestParam(required = false) String clubPlayingName,
-        @RequestParam(required = false) LocalDate matchAfter,
-        @RequestParam(required = false) LocalDate matchBeforeOrEquals
+        @RequestParam(required = false) Integer matchAfter,
+        @RequestParam(required = false) Integer matchBeforeOrEquals
     ) {
         return ResponseEntity.status(501).body("Not implemented.");
     }
@@ -48,7 +46,7 @@ public class MatchRestController {
      * Accepted update order: NOT_STARTED > STARTED > FINISHED
      * 
      * @param id the id of the match to update
-     * @param updateStatus the new status of the match
+     * @param statusUpdate the new status of the match
      * @return Match with updated status
      */
     @PutMapping("/{id}/status")

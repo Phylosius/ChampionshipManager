@@ -1,7 +1,5 @@
 package school.hei.championshipmanager.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +18,7 @@ public class MatchMakerController {
      */
     @PostMapping("/{seasonYear}")
     public ResponseEntity<?> createAllMatches(
-        @PathVariable LocalDate seasonYear
+        @PathVariable Integer seasonYear
     ) {
         return ResponseEntity.status(501).body("Not implemented.");
     }

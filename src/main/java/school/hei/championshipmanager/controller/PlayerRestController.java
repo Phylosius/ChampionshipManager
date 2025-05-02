@@ -61,7 +61,7 @@ public class PlayerRestController {
     @GetMapping("/{id}/statistics/{seasonYear}")
     public ResponseEntity<?> getStatisticsOfPlayerById(
             @PathVariable String id,
-            @PathVariable LocalDate seasonYear
+            @PathVariable Integer seasonYear
     ) {
         return ResponseEntity.status(501).body("Not implemented yet");
     }
