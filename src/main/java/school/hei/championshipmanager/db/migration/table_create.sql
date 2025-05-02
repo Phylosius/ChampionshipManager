@@ -115,29 +115,12 @@ CREATE TABLE public.match (
 ALTER TABLE public.match OWNER TO championship_manager_user;
 -- ddl-end --
 
--- object: public.match_stats | type: TABLE --
--- DROP TABLE IF EXISTS public.match_stats CASCADE;
-CREATE TABLE public.match_stats (
-	id varchar NOT NULL DEFAULT uuid_generate_v4(),
-	match_id varchar NOT NULL,
-	goals_conceded_by_home integer DEFAULT null,
-	goals_conceded_by_away integer DEFAULT null,
-	goals_scored_by_home integer DEFAULT null,
-	goals_scored_by_away integer DEFAULT null
-
-);
--- ddl-end --
-ALTER TABLE public.match_stats OWNER TO championship_manager_user;
--- ddl-end --
-
 -- object: public.player_stats | type: TABLE --
 -- DROP TABLE IF EXISTS public.player_stats CASCADE;
 CREATE TABLE public.player_stats (
 	id varchar NOT NULL DEFAULT uuid_generate_v4(),
 	match_id varchar NOT NULL,
 	player_id varchar NOT NULL,
-	goals_scored integer DEFAULT null,
-	goals_conceded integer DEFAULT null,
 	playing_time integer DEFAULT null
 
 );
@@ -145,5 +128,19 @@ CREATE TABLE public.player_stats (
 COMMENT ON COLUMN public.player_stats.playing_time IS E'in seconds';
 -- ddl-end --
 ALTER TABLE public.player_stats OWNER TO championship_manager_user;
+-- ddl-end --
+
+-- object: public.score | type: TABLE --
+-- DROP TABLE IF EXISTS public.score CASCADE;
+CREATE TABLE public.score (
+	id varchar NOT NULL DEFAULT uuid_generate_v4(),
+	player_id varchar,
+	match_id varchar,
+	minute_of_goal integer,
+	own_goal boolean DEFAULT false
+
+);
+-- ddl-end --
+ALTER TABLE public.score OWNER TO championship_manager_user;
 -- ddl-end --
 
