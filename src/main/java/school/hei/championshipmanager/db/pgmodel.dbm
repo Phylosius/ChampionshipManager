@@ -3,9 +3,9 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="19"
+<dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="18"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="110,-96" last-zoom="1" scene-rect="-740,-300,2310.8,1702.92"
+	 last-position="-310,185" last-zoom="1" scene-rect="-740,-300,2310.8,1702.92"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -52,12 +52,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="country_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="championship_name_uk" type="uq-constr" table="public.championship">
-		<columns names="name" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="championship_pk" type="pk-constr" table="public.championship">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="championship_name_uk" type="uq-constr" table="public.championship">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="championship_pk" type="pk-constr" table="public.championship">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <extension name="uuid-ossp">
@@ -77,12 +79,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="continent" default-value="EUROPE">
 		<type name="public.&quot;CONTINENT_TYPE&quot;" length="0"/>
 	</column>
-	<constraint name="country_name_uk" type="uq-constr" table="public.country">
-		<columns names="name" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="country_pk" type="pk-constr" table="public.country">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="country_name_uk" type="uq-constr" table="public.country">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="country_pk" type="pk-constr" table="public.country">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <table name="club" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
@@ -107,12 +111,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="championship_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="club_name_uk" type="uq-constr" table="public.club">
-		<columns names="name" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="club_pk" type="pk-constr" table="public.club">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="club_name_uk" type="uq-constr" table="public.club">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="club_pk" type="pk-constr" table="public.club">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <usertype name="PLAYER_POSITION" configuration="enumeration">
@@ -140,9 +146,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="club_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="coach_pk" type="pk-constr" table="public.coach">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="coach_pk" type="pk-constr" table="public.coach">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <table name="player" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
@@ -161,19 +168,23 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="nationality" alias="country_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="player_pk" type="pk-constr" table="public.player">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="player_pk" type="pk-constr" table="public.player">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
-<table name="player_role" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+<table name="player_role" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
 	<position x="360" y="120"/>
-	<column name="club_id" not-null="true">
+	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
-	<column name="player_id" not-null="true">
+	<column name="club_id">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="player_id">
 		<type name="varchar" length="0"/>
 	</column>
 	<column name="player_number" not-null="true">
@@ -186,7 +197,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<columns names="club_id,player_number" ref-type="src-columns"/>
 	</constraint>
 	<constraint name="player_role_pk" type="pk-constr" table="public.player_role">
-		<columns names="player_id,club_id" ref-type="src-columns"/>
+		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -198,31 +209,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<enumeration label="FINISHED"/>
 </usertype>
 
-<table name="season_championship" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
-	<schema name="public"/>
-	<role name="championship_manager_user"/>
-	<position x="-320" y="780"/>
-	<column name="id" not-null="true" default-value="uuid_generate_v4()">
-		<type name="varchar" length="0"/>
-	</column>
-	<column name="season_id" not-null="true">
-		<type name="varchar" length="0"/>
-	</column>
-	<column name="championship_id" not-null="true">
-		<type name="varchar" length="0"/>
-	</column>
-	<constraint name="season_championship_uk" type="uq-constr" table="public.season_championship">
-		<columns names="season_id,championship_id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="season_championship_pk" type="pk-constr" table="public.season_championship">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-</table>
-
 <table name="season" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
-	<position x="-720" y="780"/>
+	<position x="-440" y="1020"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
@@ -232,9 +222,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="status" default-value="NOT_STARTED">
 		<type name="public.&quot;EVENT_STATUS&quot;" length="0"/>
 	</column>
-	<constraint name="season_pk" type="pk-constr" table="public.season">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="season_pk" type="pk-constr" table="public.season">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <usertype name="MATCH_STATUS" configuration="enumeration">
@@ -245,14 +236,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<enumeration label="AWAY_WIN"/>
 </usertype>
 
-<table name="match" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+<table name="match" layers="0" collapse-mode="1" max-obj-count="8" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
 	<position x="120" y="980"/>
 	<column name="id" not-null="true" default-value="uuid_generate_v4()">
 		<type name="varchar" length="0"/>
 	</column>
-	<column name="season_championship_id" not-null="true">
+	<column name="season_id" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="championship_id" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
 	<column name="home_club_id" alias="home_club" not-null="true">
@@ -271,7 +265,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 			<expression> <![CDATA[host_team_id <> guest_team_id]]> </expression>
 	</constraint>
 	<constraint name="match_uk" type="uq-constr" table="public.match">
-		<columns names="season_championship_id,home_club_id,away_club_id" ref-type="src-columns"/>
+		<columns names="championship_id,home_club_id,away_club_id" ref-type="src-columns"/>
 	</constraint>
 	<constraint name="match_pk" type="pk-constr" table="public.match">
 		<columns names="id" ref-type="src-columns"/>
@@ -295,12 +289,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="integer" length="0"/>
 		<comment> <![CDATA[in seconds]]> </comment>
 	</column>
-	<constraint name="player_stats_uk" type="uq-constr" table="public.player_stats">
-		<columns names="match_id,player_id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="player_stats_pk" type="pk-constr" table="public.player_stats">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="player_stats_uk" type="uq-constr" table="public.player_stats">
+	<columns names="match_id,player_id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="player_stats_pk" type="pk-constr" table="public.player_stats">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <table name="score" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
@@ -322,12 +318,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="own_goal" default-value="false">
 		<type name="boolean" length="0"/>
 	</column>
-	<constraint name="score_pk" type="pk-constr" table="public.score">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="score_uk" type="uq-constr" table="public.score">
-		<columns names="player_id,match_id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="score_pk" type="pk-constr" table="public.score">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="score_uk" type="uq-constr" table="public.score">
+	<columns names="player_id,match_id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <constraint name="championship_country_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
@@ -372,21 +370,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="season_championship_season_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.season" table="public.season_championship">
+<constraint name="match_season_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.season" table="public.match">
 	<columns names="season_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="season_championship_championship_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.championship" table="public.season_championship">
+<constraint name="match_championship_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.championship" table="public.match">
 	<columns names="championship_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="match_season_championship_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.season_championship" table="public.match">
-	<columns names="season_championship_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -472,20 +464,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<relationship name="rel_season_championship_season" type="relfk" layers="0"
-	 src-table="public.season_championship"
-	 dst-table="public.season" reference-fk="season_championship_season_id_fk"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="-9.9869" y="-95.253"/>
-	</label>
-</relationship>
-
-<relationship name="rel_season_championship_championship" type="relfk" layers="0"
-	 src-table="public.season_championship"
-	 dst-table="public.championship" reference-fk="season_championship_championship_id_fk"
-	 src-required="false" dst-required="true"/>
-
 <relationship name="rel_match_club" type="relfk" layers="0"
 	 src-table="public.match"
 	 dst-table="public.club" reference-fk="match_home_club_id_fk"
@@ -501,15 +479,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
 		<position x="102.267" y="-39.153"/>
-	</label>
-</relationship>
-
-<relationship name="rel_match_season_championship" type="relfk" layers="0"
-	 src-table="public.match"
-	 dst-table="public.season_championship" reference-fk="match_season_championship_id_fk"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="0.809974" y="-32.203"/>
 	</label>
 </relationship>
 
@@ -535,6 +504,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_score_match" type="relfk" layers="0"
 	 src-table="public.score"
 	 dst-table="public.match" reference-fk="score_match_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_season" type="relfk" layers="0"
+	 src-table="public.match"
+	 dst-table="public.season" reference-fk="match_season_id_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_match_championship" type="relfk" layers="0"
+	 src-table="public.match"
+	 dst-table="public.championship" reference-fk="match_championship_id_fk"
 	 src-required="false" dst-required="true"/>
 
 </dbmodel>

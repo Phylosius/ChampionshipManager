@@ -66,26 +66,15 @@ ALTER TABLE public.player OWNER TO championship_manager_user;
 -- object: public.player_role | type: TABLE --
 -- DROP TABLE IF EXISTS public.player_role CASCADE;
 CREATE TABLE public.player_role (
-	club_id varchar NOT NULL,
-	player_id varchar NOT NULL,
+	id varchar NOT NULL DEFAULT uuid_generate_v4(),
+	club_id varchar,
+	player_id varchar,
 	player_number integer NOT NULL,
 	player_position public."PLAYER_POSITION"
 
 );
 -- ddl-end --
 ALTER TABLE public.player_role OWNER TO championship_manager_user;
--- ddl-end --
-
--- object: public.season_championship | type: TABLE --
--- DROP TABLE IF EXISTS public.season_championship CASCADE;
-CREATE TABLE public.season_championship (
-	id varchar NOT NULL DEFAULT uuid_generate_v4(),
-	season_id varchar NOT NULL,
-	championship_id varchar NOT NULL
-
-);
--- ddl-end --
-ALTER TABLE public.season_championship OWNER TO championship_manager_user;
 -- ddl-end --
 
 -- object: public.season | type: TABLE --
@@ -104,7 +93,8 @@ ALTER TABLE public.season OWNER TO championship_manager_user;
 -- DROP TABLE IF EXISTS public.match CASCADE;
 CREATE TABLE public.match (
 	id varchar NOT NULL DEFAULT uuid_generate_v4(),
-	season_championship_id varchar NOT NULL,
+	season_id varchar NOT NULL,
+	championship_id varchar NOT NULL,
 	home_club_id varchar NOT NULL,
 	away_club_id varchar NOT NULL,
 	date timestamp DEFAULT null,
