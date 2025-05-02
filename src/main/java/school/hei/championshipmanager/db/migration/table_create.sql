@@ -55,7 +55,6 @@ ALTER TABLE public.coach OWNER TO championship_manager_user;
 CREATE TABLE public.player (
 	id varchar NOT NULL DEFAULT uuid_generate_v4(),
 	name varchar NOT NULL,
-	"position" public."PLAYER_POSITION" NOT NULL,
 	age integer NOT NULL,
 	nationality varchar NOT NULL
 
@@ -64,16 +63,17 @@ CREATE TABLE public.player (
 ALTER TABLE public.player OWNER TO championship_manager_user;
 -- ddl-end --
 
--- object: public.player_number | type: TABLE --
--- DROP TABLE IF EXISTS public.player_number CASCADE;
-CREATE TABLE public.player_number (
+-- object: public.player_role | type: TABLE --
+-- DROP TABLE IF EXISTS public.player_role CASCADE;
+CREATE TABLE public.player_role (
 	club_id varchar NOT NULL,
 	player_id varchar NOT NULL,
-	player_number integer NOT NULL
+	player_number integer NOT NULL,
+	player_position public."PLAYER_POSITION"
 
 );
 -- ddl-end --
-ALTER TABLE public.player_number OWNER TO championship_manager_user;
+ALTER TABLE public.player_role OWNER TO championship_manager_user;
 -- ddl-end --
 
 -- object: public.season_championship | type: TABLE --

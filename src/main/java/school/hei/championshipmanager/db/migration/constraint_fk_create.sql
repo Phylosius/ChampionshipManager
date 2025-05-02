@@ -33,16 +33,16 @@ REFERENCES public.country (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --
 
--- object: player_number_player_id_fk | type: CONSTRAINT --
--- ALTER TABLE public.player_number DROP CONSTRAINT IF EXISTS player_number_player_id_fk CASCADE;
-ALTER TABLE public.player_number ADD CONSTRAINT player_number_player_id_fk FOREIGN KEY (player_id)
+-- object: player_role_player_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.player_role DROP CONSTRAINT IF EXISTS player_role_player_id_fk CASCADE;
+ALTER TABLE public.player_role ADD CONSTRAINT player_role_player_id_fk FOREIGN KEY (player_id)
 REFERENCES public.player (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --
 
--- object: player_number_club_id_fk | type: CONSTRAINT --
--- ALTER TABLE public.player_number DROP CONSTRAINT IF EXISTS player_number_club_id_fk CASCADE;
-ALTER TABLE public.player_number ADD CONSTRAINT player_number_club_id_fk FOREIGN KEY (club_id)
+-- object: player_role_club_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.player_role DROP CONSTRAINT IF EXISTS player_role_club_id_fk CASCADE;
+ALTER TABLE public.player_role ADD CONSTRAINT player_role_club_id_fk FOREIGN KEY (club_id)
 REFERENCES public.club (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --

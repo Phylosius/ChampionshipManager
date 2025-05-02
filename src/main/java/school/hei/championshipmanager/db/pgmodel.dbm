@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="19"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="-740,636" last-zoom="1" scene-rect="-740,-300,2310.8,1702.92"
+	 last-position="110,-96" last-zoom="1" scene-rect="-740,-300,2310.8,1702.92"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -145,7 +145,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="player" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+<table name="player" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
 	<position x="660" y="-280"/>
@@ -154,9 +154,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="name" not-null="true">
 		<type name="varchar" length="0"/>
-	</column>
-	<column name="position" not-null="true">
-		<type name="public.&quot;PLAYER_POSITION&quot;" length="0"/>
 	</column>
 	<column name="age" not-null="true">
 		<type name="integer" length="0"/>
@@ -169,7 +166,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="player_number" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+<table name="player_role" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
 	<position x="360" y="120"/>
@@ -182,10 +179,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="player_number" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
-	<constraint name="player_number_uk" type="uq-constr" table="public.player_number">
-		<columns names="player_number" ref-type="src-columns"/>
+	<column name="player_position">
+		<type name="public.&quot;PLAYER_POSITION&quot;" length="0"/>
+	</column>
+	<constraint name="player_role_uk" type="uq-constr" table="public.player_role">
+		<columns names="club_id,player_number" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="player_number_pk" type="pk-constr" table="public.player_number">
+	<constraint name="player_role_pk" type="pk-constr" table="public.player_role">
 		<columns names="player_id,club_id" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -360,14 +360,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="player_number_player_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.player" table="public.player_number">
+<constraint name="player_role_player_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.player" table="public.player_role">
 	<columns names="player_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="player_number_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.player_number">
+<constraint name="player_role_club_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.club" table="public.player_role">
 	<columns names="club_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
@@ -447,13 +447,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="true"/>
 
 <relationship name="rel_player_number_player" type="relfk" layers="0"
-	 src-table="public.player_number"
-	 dst-table="public.player" reference-fk="player_number_player_id_fk"
+	 src-table="public.player_role"
+	 dst-table="public.player" reference-fk="player_role_player_id_fk"
 	 src-required="false" dst-required="true"/>
 
 <relationship name="rel_player_number_club" type="relfk" layers="0"
-	 src-table="public.player_number"
-	 dst-table="public.club" reference-fk="player_number_club_id_fk"
+	 src-table="public.player_role"
+	 dst-table="public.club" reference-fk="player_role_club_id_fk"
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
 		<position x="19.6459" y="-72.203"/>

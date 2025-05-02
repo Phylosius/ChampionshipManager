@@ -13,9 +13,9 @@ ALTER TABLE public.country ADD CONSTRAINT country_name_uk UNIQUE (name);
 ALTER TABLE public.club ADD CONSTRAINT club_name_uk UNIQUE (name);
 -- ddl-end --
 
--- object: player_number_uk | type: CONSTRAINT --
--- ALTER TABLE public.player_number DROP CONSTRAINT IF EXISTS player_number_uk CASCADE;
-ALTER TABLE public.player_number ADD CONSTRAINT player_number_uk UNIQUE (player_number);
+-- object: player_role_uk | type: CONSTRAINT --
+-- ALTER TABLE public.player_role DROP CONSTRAINT IF EXISTS player_role_uk CASCADE;
+ALTER TABLE public.player_role ADD CONSTRAINT player_role_uk UNIQUE (club_id,player_number);
 -- ddl-end --
 
 -- object: season_championship_uk | type: CONSTRAINT --

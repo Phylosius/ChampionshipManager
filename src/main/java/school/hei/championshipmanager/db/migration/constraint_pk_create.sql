@@ -23,9 +23,9 @@ ALTER TABLE public.coach ADD CONSTRAINT coach_pk PRIMARY KEY (id);
 ALTER TABLE public.player ADD CONSTRAINT player_pk PRIMARY KEY (id);
 -- ddl-end --
 
--- object: player_number_pk | type: CONSTRAINT --
--- ALTER TABLE public.player_number DROP CONSTRAINT IF EXISTS player_number_pk CASCADE;
-ALTER TABLE public.player_number ADD CONSTRAINT player_number_pk PRIMARY KEY (player_id,club_id);
+-- object: player_role_pk | type: CONSTRAINT --
+-- ALTER TABLE public.player_role DROP CONSTRAINT IF EXISTS player_role_pk CASCADE;
+ALTER TABLE public.player_role ADD CONSTRAINT player_role_pk PRIMARY KEY (player_id,club_id);
 -- ddl-end --
 
 -- object: season_championship_pk | type: CONSTRAINT --
