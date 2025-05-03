@@ -11,19 +11,9 @@ import java.util.List;
 
 @AllArgsConstructor
 @Repository
-public class BaseRepo {
+public class SqlStatementOperation {
 
     private final DataSource dataSource;
-
-    public boolean isExists(String selectSql, String id) {
-
-        return executeQuery(selectSql, List.of(id), null, null, resultSet -> {
-            if (resultSet.next()) {
-                return 1;
-            }
-            return 0;
-        }) == 1;
-    }
 
     public Integer executeQuery(
             String sql, List<?> params,
