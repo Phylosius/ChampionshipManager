@@ -15,6 +15,16 @@ public class BaseRepo {
 
     private final DataSource dataSource;
 
+    public boolean isExists(String selectSql, String id) {
+
+        return executeQuery(selectSql, List.of(id), 1, 1, resultSet -> {
+            if (resultSet.next()) {
+                return 1;
+            }
+            return 0;
+        }) == 1;
+    }
+
     public Integer executeQuery(
             String sql, List<Object> params,
             Integer page, Integer pageSize,
