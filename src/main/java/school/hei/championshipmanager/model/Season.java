@@ -1,0 +1,19 @@
+package school.hei.championshipmanager.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import school.hei.championshipmanager.enums.EventStatus;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Season {
+    private String id;
+    private String year;
+    private EventStatus status;
+
+    public String getAlias() {
+        return String.format("S%s-%s", year, year + 1);
+    }
+}
