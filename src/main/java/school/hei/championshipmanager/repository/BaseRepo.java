@@ -26,7 +26,7 @@ public class BaseRepo {
     }
 
     public Integer executeQuery(
-            String sql, List<Object> params,
+            String sql, List<?> params,
             Integer page, Integer pageSize,
             ResultSetHandler resultSetHandler
     )
@@ -36,12 +36,12 @@ public class BaseRepo {
         });
     }
 
-    public Integer executeUpdate(String sql, List<Object> params) {
+    public Integer executeUpdate(String sql, List<?> params) {
         return executePreparedStatement(sql, params, null, null, PreparedStatement::executeUpdate);
     }
 
     public Integer executePreparedStatement(
-            String sql, List<Object> params,
+            String sql, List<?> params,
             Integer page, Integer pageSize,
             PreparedStatementHandler preparedStatementHandler
     )
