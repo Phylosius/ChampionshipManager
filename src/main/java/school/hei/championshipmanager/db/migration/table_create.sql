@@ -15,7 +15,7 @@ ALTER TABLE public.championship OWNER TO championship_manager_user;
 CREATE TABLE public.country (
 	id varchar NOT NULL DEFAULT uuid_generate_v4(),
 	name varchar NOT NULL,
-	continent public."CONTINENT_TYPE" DEFAULT EUROPE
+	continent public."CONTINENT_TYPE" DEFAULT 'EUROPE'::public."CONTINENT_TYPE"
 
 );
 -- ddl-end --
@@ -82,7 +82,7 @@ ALTER TABLE public.player_role OWNER TO championship_manager_user;
 CREATE TABLE public.season (
 	id varchar NOT NULL DEFAULT uuid_generate_v4(),
 	year integer NOT NULL,
-	status public."EVENT_STATUS" DEFAULT NOT_STARTED
+	status public."EVENT_STATUS" DEFAULT 'NOT_STARTED'::public."EVENT_STATUS"
 
 );
 -- ddl-end --
@@ -98,7 +98,7 @@ CREATE TABLE public.match (
 	home_club_id varchar NOT NULL,
 	away_club_id varchar NOT NULL,
 	date timestamp DEFAULT null,
-	status public."EVENT_STATUS" DEFAULT NOT_STARTED
+	status public."EVENT_STATUS" DEFAULT 'NOT_STARTED'::public."EVENT_STATUS"
 
 );
 -- ddl-end --

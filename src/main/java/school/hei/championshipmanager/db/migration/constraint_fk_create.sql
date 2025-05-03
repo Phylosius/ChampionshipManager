@@ -54,6 +54,13 @@ REFERENCES public.season (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --
 
+-- object: match_championship_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.match DROP CONSTRAINT IF EXISTS match_championship_id_fk CASCADE;
+ALTER TABLE public.match ADD CONSTRAINT match_championship_id_fk FOREIGN KEY (championship_id)
+REFERENCES public.championship (id) MATCH SIMPLE
+ON DELETE CASCADE ON UPDATE NO ACTION;
+-- ddl-end --
+
 -- object: match_home_club_id_fk | type: CONSTRAINT --
 -- ALTER TABLE public.match DROP CONSTRAINT IF EXISTS match_home_club_id_fk CASCADE;
 ALTER TABLE public.match ADD CONSTRAINT match_home_club_id_fk FOREIGN KEY (home_club_id)
@@ -93,13 +100,6 @@ ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ALTER TABLE public.score DROP CONSTRAINT IF EXISTS score_match_id_fk CASCADE;
 ALTER TABLE public.score ADD CONSTRAINT score_match_id_fk FOREIGN KEY (match_id)
 REFERENCES public.match (id) MATCH SIMPLE
-ON DELETE CASCADE ON UPDATE NO ACTION;
--- ddl-end --
-
--- object: match_championship_id_fk | type: CONSTRAINT --
--- ALTER TABLE public.match DROP CONSTRAINT IF EXISTS match_championship_id_fk CASCADE;
-ALTER TABLE public.match ADD CONSTRAINT match_championship_id_fk FOREIGN KEY (championship_id)
-REFERENCES public.championship (id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE NO ACTION;
 -- ddl-end --
 
