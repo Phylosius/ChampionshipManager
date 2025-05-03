@@ -17,7 +17,7 @@ public class BaseRepo {
 
     public boolean isExists(String selectSql, String id) {
 
-        return executeQuery(selectSql, List.of(id), 1, 1, resultSet -> {
+        return executeQuery(selectSql, List.of(id), null, null, resultSet -> {
             if (resultSet.next()) {
                 return 1;
             }
@@ -36,8 +36,8 @@ public class BaseRepo {
         });
     }
 
-    public Integer executeUpdate(String sql, List<Object> params, Integer page, Integer pageSize) {
-        return executePreparedStatement(sql, params, page, pageSize, PreparedStatement::executeUpdate);
+    public Integer executeUpdate(String sql, List<Object> params) {
+        return executePreparedStatement(sql, params, null, null, PreparedStatement::executeUpdate);
     }
 
     public Integer executePreparedStatement(
