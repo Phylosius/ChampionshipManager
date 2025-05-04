@@ -12,5 +12,8 @@ public class Player {
     private String name;
     private Integer age;
     private Country country;
-    private PlayerStats stats;
+
+    public PlayerStats getStats(){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
