@@ -10,7 +10,7 @@ import school.hei.championshipmanager.enums.EventStatus;
 @Data
 public class Season {
     private String id;
-    private String year;
+    private Integer year;
     private EventStatus status;
 
     public String getAlias() {
