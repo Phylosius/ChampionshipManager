@@ -15,6 +15,11 @@ public class Club {
     private String acronym;
     private Integer creationYear;
     private String stadiumName;
-    private List<ClubPlayer> players;
+    private String championshipId;
     private Coach coach;
+    private List<ClubPlayer> players;
+
+    public Championship getChampionship() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
