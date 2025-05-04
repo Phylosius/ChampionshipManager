@@ -3,6 +3,7 @@ package school.hei.championshipmanager.mappers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.model.Club;
+import school.hei.championshipmanager.repository.ClubPlayerRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class ClubMapper implements ModelRepositoryMapper<Club> {
+
+    private final ClubPlayerRepository clubPlayerRepository;
 
     @Override
     public List<?> toCreationParams(Club club) {
@@ -37,6 +40,10 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
             club.setAcronym(rs.getString("acronym"));
             club.setStadiumName(rs.getString("stadium_name"));
             club.setChampionshipId(rs.getString("championship_id"));
+            club.setPlayers(
+                    clubPlayerRepository.getAllBy("r.club_id = ? AND is_active = true",
+                            List.of(club.getId()), null, null)
+            );
 
             return club;
         } catch (SQLException e) {
