@@ -2,6 +2,7 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.repository.CountryRepo;
 
@@ -40,5 +41,16 @@ public class PlayerMapper implements ModelRepositoryMapper<Player> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Player toModel(ClubPlayer clubPlayer) {
+        Player player = new Player();
+
+        player.setId(clubPlayer.getId());
+        player.setName(clubPlayer.getName());
+        player.setAge(clubPlayer.getAge());
+        player.setCountry(clubPlayer.getCountry());
+
+        return player;
     }
 }
