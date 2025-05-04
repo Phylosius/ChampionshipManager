@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="18"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="-577,-345" last-zoom="1.15" scene-rect="-740,-300,2310.8,1702.92"
+	 last-position="51,-35" last-zoom="1.15" scene-rect="-740,-300,2310.8,1702.92"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -79,12 +79,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="continent" default-value="'EUROPE'::public.&quot;CONTINENT_TYPE&quot;">
 		<type name="public.&quot;CONTINENT_TYPE&quot;" length="0"/>
 	</column>
-	<constraint name="country_name_uk" type="uq-constr" table="public.country">
-		<columns names="name" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="country_pk" type="pk-constr" table="public.country">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
+<constraint name="country_name_uk" type="uq-constr" table="public.country">
+	<columns names="name" ref-type="src-columns"/>
+</constraint>
+
+<constraint name="country_pk" type="pk-constr" table="public.country">
+	<columns names="id" ref-type="src-columns"/>
+</constraint>
+
 </table>
 
 <table name="club" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
@@ -172,7 +174,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 </table>
 
-<table name="player_role" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+<table name="player_role" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="championship_manager_user"/>
 	<position x="360" y="120"/>
@@ -191,14 +193,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="player_position">
 		<type name="public.&quot;PLAYER_POSITION&quot;" length="0"/>
 	</column>
-<constraint name="player_role_uk" type="uq-constr" table="public.player_role">
-	<columns names="club_id,player_number" ref-type="src-columns"/>
-</constraint>
-
-<constraint name="player_role_pk" type="pk-constr" table="public.player_role">
-	<columns names="id" ref-type="src-columns"/>
-</constraint>
-
+	<column name="is_active" not-null="true" default-value="TRUE">
+		<type name="boolean" length="0"/>
+		<comment> <![CDATA[tell if the player's role is active]]> </comment>
+	</column>
+	<constraint name="player_role_uk" type="uq-constr" table="public.player_role">
+		<columns names="club_id,player_number" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="player_role_pk" type="pk-constr" table="public.player_role">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <usertype name="EVENT_STATUS" configuration="enumeration">

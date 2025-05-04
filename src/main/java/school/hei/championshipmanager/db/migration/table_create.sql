@@ -70,9 +70,12 @@ CREATE TABLE public.player_role (
 	club_id varchar,
 	player_id varchar,
 	player_number integer NOT NULL,
-	player_position public."PLAYER_POSITION"
+	player_position public."PLAYER_POSITION",
+	is_active boolean NOT NULL DEFAULT TRUE
 
 );
+-- ddl-end --
+COMMENT ON COLUMN public.player_role.is_active IS E'tell if the player''s role is active';
 -- ddl-end --
 ALTER TABLE public.player_role OWNER TO championship_manager_user;
 -- ddl-end --
