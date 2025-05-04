@@ -14,6 +14,7 @@ public class ClubPlayer extends Player {
     private String clubId;
     private Integer number;
     private PlayerPosition position;
+    private Boolean active;
 
     public Club getClub() {
         throw new UnsupportedOperationException("Not supported yet.");
