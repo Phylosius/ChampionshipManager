@@ -3,7 +3,6 @@ package school.hei.championshipmanager.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import school.hei.championshipmanager.exeptions.EntityAlreadyExistException;
-import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.ModelRepositoryMapper;
 
 import java.util.ArrayList;
@@ -14,9 +13,8 @@ import java.util.List;
 public class BaseRepo<E> {
 
     private final SqlStatementOperation sqlStatementOperation;
-    private final ModelRepositoryMapper<E> modelRepositoryMapper;
 
-    public List<E> getAll(String selectSql, List<?> params, Integer page, Integer pageSize) {
+    public List<E> getAll(String selectSql, List<?> params, Integer page, Integer pageSize, ModelRepositoryMapper<E> modelRepositoryMapper) {
         List<E> result = new ArrayList<>();
 
         sqlStatementOperation.executeQuery(selectSql, params, page, pageSize, resultSet -> {
@@ -32,11 +30,11 @@ public class BaseRepo<E> {
         return result;
     }
 
-    public int update(String updateSql, E entity) {
+    public int update(String updateSql, E entity, ModelRepositoryMapper<E> modelRepositoryMapper) {
         return sqlStatementOperation.executeUpdate(updateSql, modelRepositoryMapper.toUpdateParams(entity));
     }
 
-    public int add(String insertionSql, E entity) throws EntityAlreadyExistException {
+    public int add(String insertionSql, E entity, ModelRepositoryMapper<E> modelRepositoryMapper) throws EntityAlreadyExistException {
         return sqlStatementOperation.executeUpdate(insertionSql, modelRepositoryMapper.toCreationParams(entity));
     }
 
