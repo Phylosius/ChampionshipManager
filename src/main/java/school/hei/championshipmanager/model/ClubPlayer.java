@@ -11,6 +11,7 @@ import school.hei.championshipmanager.enums.PlayerPosition;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ClubPlayer extends Player {
+    private String roleId;
     private String clubId;
     private Integer number;
     private PlayerPosition position;
