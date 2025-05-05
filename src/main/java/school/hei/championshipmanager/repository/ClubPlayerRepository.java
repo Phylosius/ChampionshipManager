@@ -27,7 +27,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     }
 
     public List<ClubPlayer> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
-        StringBuilder sqlBuilder = new StringBuilder("""
+        return baseRepo.getAllBy("""
                 SELECT
                 r.id AS role_id,
                 r.club_id AS club_id,
@@ -42,16 +42,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 FROM player_role r
                 JOIN player p
                     ON p.id = r.player_id
-                """);
-        List<?> params = null;
-
-        if (conditionSql != null) {
-            sqlBuilder.append(" WHERE ");
-            sqlBuilder.append(conditionSql);
-            params = sqlParams;
-        }
-
-        return baseRepo.getAll(sqlBuilder.toString(), params, page, pageSize, mapper);
+                """, conditionSql, sqlParams, page, pageSize, mapper);
     }
 
     @Override
