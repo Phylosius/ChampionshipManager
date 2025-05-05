@@ -15,5 +15,8 @@ public class PlayerStats {
     private String playerId;
     private String matchId;
     private Duration playingTime;
-    private List<PlayerScore> scores;
+
+    public List<PlayerScore> getScores() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
