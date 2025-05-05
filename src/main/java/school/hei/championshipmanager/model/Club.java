@@ -3,6 +3,7 @@ package school.hei.championshipmanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import school.hei.championshipmanager.repository.ChampionshipRepo;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Club {
     private Coach coach;
     private List<ClubPlayer> players;
 
-    public Championship getChampionship() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Championship getChampionship(ChampionshipRepo championshipRepo) {
+        return championshipRepo.getById(championshipId);
     }
 }

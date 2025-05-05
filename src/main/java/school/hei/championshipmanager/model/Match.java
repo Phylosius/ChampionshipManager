@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import school.hei.championshipmanager.enums.EventStatus;
+import school.hei.championshipmanager.repository.ChampionshipRepo;
+import school.hei.championshipmanager.repository.SeasonRepo;
 
 import java.time.LocalDateTime;
 
@@ -19,11 +21,11 @@ public class Match {
     private Club awayClub;
     private EventStatus status;
 
-    public Season getSeason() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Season getSeason(SeasonRepo seasonRepo) {
+        return seasonRepo.getById(seasonId);
     }
 
-    public Championship getChampionship() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Championship getChampionship(ChampionshipRepo championshipRepo) {
+        return championshipRepo.getById(championshipId);
     }
 }

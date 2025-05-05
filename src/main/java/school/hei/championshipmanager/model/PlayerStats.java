@@ -3,6 +3,7 @@ package school.hei.championshipmanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import school.hei.championshipmanager.repository.PlayerScoreRepo;
 
 import java.time.Duration;
 import java.util.List;
@@ -16,7 +17,7 @@ public class PlayerStats {
     private String matchId;
     private Duration playingTime;
 
-    public List<PlayerScore> getScores() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<PlayerScore> getScores(PlayerScoreRepo playerScoreRepo) {
+        return playerScoreRepo.getAllByPlayerId(playerId, null, null);
     }
 }

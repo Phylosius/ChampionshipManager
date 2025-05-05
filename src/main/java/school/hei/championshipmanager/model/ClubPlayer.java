@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import school.hei.championshipmanager.enums.PlayerPosition;
+import school.hei.championshipmanager.repository.ClubRepo;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class ClubPlayer extends Player {
     private PlayerPosition position;
     private Boolean active;
 
-    public Club getClub() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Club getClub(ClubRepo clubRepo) {
+        return clubRepo.getById(clubId);
     }
 }
