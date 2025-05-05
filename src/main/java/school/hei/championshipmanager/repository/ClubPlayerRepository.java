@@ -16,6 +16,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
 
     private final ClubPlayerMapper mapper;
     private final BaseRepo<ClubPlayer> baseRepo;
+    private final PlayerRepo playerRepo;
 
     @Override
     public List<ClubPlayer> getAll(Integer page, Integer pageSize) {
@@ -67,7 +68,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 r.player_id AS player_id,
                 p.name AS player_name,
                 p.age AS player_age,
-                p.country_id AS country_id,
+                p.nationality AS country_id,
                 r.player_number AS player_number,
                 r.player_position AS player_position,
                 r.is_active AS is_active
@@ -80,8 +81,17 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 """, conditionSql, sqlParams, page, pageSize, mapper);
     }
 
+    public int save(ClubPlayer clubPlayer) {
+        if (isExists(clubPlayer)) {
+            return update(clubPlayer);
+        } else {
+            return add(clubPlayer);
+        }
+    }
+
     @Override
     public int add(ClubPlayer clubPlayer) throws EntityAlreadyExistException {
+        playerRepo.save(clubPlayer);
         return baseRepo.add("""
                 INSERT INTO
                 player_role
@@ -93,6 +103,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
 
     @Override
     public int update(ClubPlayer clubPlayer) {
+        playerRepo.save(clubPlayer);
         return baseRepo.add("""
                 UPDATE
                 player_role
@@ -105,5 +116,9 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     @Override
     public int delete(String id) throws EntityNotFoundException {
         return baseRepo.delete("DELETE FROM player_role WHERE id = ?", id);
+    }
+
+    public Boolean isExists(ClubPlayer player) throws EntityNotFoundException {
+        return baseRepo.isExists("SELECT COUNT(*) FROM player_role WHERE player_id = ?", player.getId());
     }
 }
