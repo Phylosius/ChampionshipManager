@@ -18,23 +18,21 @@ public class ClubRepo implements EntityRepo<Club, String> {
 
     @Override
     public List<Club> getAll(Integer page, Integer pageSize) {
-        return baseRepo.getAll("""
-                SELECT
-                id, name, creation_year, acronym, stadium_name, championship_id
-                FROM
-                club
-                """, null, page, pageSize, clubMapper);
+        return getAllBy(null, null, page, pageSize);
     }
 
     @Override
     public Club getById(String id) throws EntityNotFoundException {
-        return baseRepo.getAll("""
+        return getAllBy("id = ?", List.of(id), null, null).getFirst();
+    }
+
+    public List<Club> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
+        return baseRepo.getAllBy("""
                 SELECT
                 id, name, creation_year, acronym, stadium_name, championship_id
                 FROM
                 club
-                WHERE id = ?
-                """, List.of(id), null, null, clubMapper).getFirst();
+                """, conditionSql, sqlParams, page, pageSize, clubMapper);
     }
 
     @Override
