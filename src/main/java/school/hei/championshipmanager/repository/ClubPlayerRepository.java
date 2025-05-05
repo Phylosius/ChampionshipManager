@@ -7,6 +7,7 @@ import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
 import school.hei.championshipmanager.model.ClubPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,6 +27,38 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
         return getAllBy("r.id = ?", List.of(roleId), null, null).getFirst();
     }
 
+    public List<ClubPlayer> getAllFiltered(String nameContaining, String clubNameContaining, Integer ageMin, Integer ageMax, Integer page, Integer pageSize) {
+        StringBuilder conditionSql = null;
+        List<Object> sqlParams = null;
+
+        if (nameContaining != null || clubNameContaining != null || ageMin != null || ageMax != null || page != null || pageSize != null) {
+            conditionSql = new StringBuilder();
+            sqlParams = new ArrayList<>();
+
+            if (nameContaining != null) {
+                conditionSql.append("p.name ILIKE %?%");
+                sqlParams.add(nameContaining);
+            }
+
+            if (clubNameContaining != null) {
+                conditionSql.append("c.name ILIKE %?%");
+                sqlParams.add(clubNameContaining);
+            }
+
+            if (ageMin != null) {
+                conditionSql.append("p.age >= ?");
+                sqlParams.add(ageMin);
+            }
+
+            if (ageMax != null) {
+                conditionSql.append("p.age <= ?");
+                sqlParams.add(ageMax);
+            }
+        }
+
+        return getAllBy(conditionSql != null ? conditionSql.toString() : null, sqlParams, page, pageSize);
+    }
+
     public List<ClubPlayer> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
         return baseRepo.getAllBy("""
                 SELECT
@@ -42,6 +75,8 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 FROM player_role r
                 JOIN player p
                     ON p.id = r.player_id
+                JOIN club c
+                    ON c.id = r.club_id
                 """, conditionSql, sqlParams, page, pageSize, mapper);
     }
 

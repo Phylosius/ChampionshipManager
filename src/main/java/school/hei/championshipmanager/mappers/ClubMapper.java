@@ -2,6 +2,7 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.ClubRest;
 import school.hei.championshipmanager.model.Club;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
 import school.hei.championshipmanager.repository.CoachRepo;
@@ -16,6 +17,7 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
 
     private final ClubPlayerRepository clubPlayerRepository;
     private final CoachRepo coachRepo;
+    private final CoachMapper coachMapper;
 
     @Override
     public List<?> toCreationParams(Club club) {
@@ -54,5 +56,20 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ClubRest toDTO(Club club) {
+        ClubRest dto = new ClubRest();
+
+        dto.setId(club.getId());
+        dto.setName(club.getName());
+        dto.setAcronym(club.getAcronym());
+        dto.setStadium(club.getStadiumName());
+        dto.setYearCreation(club.getCreationYear());
+        dto.setCoach(
+                coachMapper.toDTO(club.getCoach())
+        );
+
+        return dto;
     }
 }

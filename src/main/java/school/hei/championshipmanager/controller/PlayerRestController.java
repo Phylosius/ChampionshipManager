@@ -1,8 +1,8 @@
 package school.hei.championshipmanager.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.services.ClubPlayerService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/players")
 public class PlayerRestController {
-    
+
+    private final ClubPlayerService clubPlayerService;
+
     /***
      * Get list of players in the championship
      * 
      * @param nameContaining Filter the return list by name containing ignore case
-     * @param clubName Filter the return list by club name containing ignore case
+     * @param clubNameContaining Filter the return list by club name containing ignore case
      * @param ageMin Filter the return list by age greater than provided value
      * @param ageMax Filter the return list by age less than provided value
      * @return List of players with their clubs
@@ -30,11 +34,19 @@ public class PlayerRestController {
     @GetMapping
     public ResponseEntity<?> getPlayers(
             @RequestParam(name = "name", required = false) String nameContaining,
-            @RequestParam(name = "clubName", required = false) String clubName,
+            @RequestParam(name = "clubNameContaining", required = false) String clubNameContaining,
             @RequestParam(name = "ageMinimum", required = false) Integer ageMin,
-            @RequestParam(name = "ageMaximum", required = false) Integer ageMax
+            @RequestParam(name = "ageMaximum", required = false) Integer ageMax,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize
     ) {
-        return ResponseEntity.status(501).body("Not implemented yet");
+        try {
+            return ResponseEntity.ok(
+                    clubPlayerService.getPlayers(nameContaining, clubNameContaining, ageMin, ageMax, page, pageSize)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***

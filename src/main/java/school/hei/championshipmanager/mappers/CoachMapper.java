@@ -2,6 +2,7 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.CoachRest;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.model.Coach;
 import school.hei.championshipmanager.repository.CountryRepo;
@@ -42,5 +43,14 @@ public class CoachMapper implements ModelRepositoryMapper<Coach> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public CoachRest toDTO(Coach coach) {
+        CoachRest dto = new CoachRest();
+
+        dto.setName(coach.getName());
+        dto.setNationality(coach.getCountry().getName());
+
+        return dto;
     }
 }
