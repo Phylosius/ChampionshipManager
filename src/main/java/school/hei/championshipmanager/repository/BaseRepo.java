@@ -14,6 +14,19 @@ public class BaseRepo<E> {
 
     private final SqlStatementOperation sqlStatementOperation;
 
+    public List<E> getAllBy(String selectionSql, String conditionSql, List<?> sqlParams, Integer page, Integer pageSize, ModelRepositoryMapper<E> modelRepositoryMapper) {
+        StringBuilder sqlBuilder = new StringBuilder(selectionSql);
+        List<?> params = null;
+
+        if (conditionSql != null) {
+            sqlBuilder.append(" WHERE ");
+            sqlBuilder.append(conditionSql);
+            params = sqlParams;
+        }
+
+        return getAll(sqlBuilder.toString(), params, page, pageSize, modelRepositoryMapper);
+    }
+
     public List<E> getAll(String selectSql, List<?> params, Integer page, Integer pageSize, ModelRepositoryMapper<E> modelRepositoryMapper) {
         List<E> result = new ArrayList<>();
 
