@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.model.Club;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
+import school.hei.championshipmanager.repository.CoachRepo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ClubMapper implements ModelRepositoryMapper<Club> {
 
     private final ClubPlayerRepository clubPlayerRepository;
+    private final CoachRepo coachRepo;
 
     @Override
     public List<?> toCreationParams(Club club) {
@@ -43,6 +45,9 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
             club.setPlayers(
                     clubPlayerRepository.getAllBy("r.club_id = ? AND is_active = true",
                             List.of(club.getId()), null, null)
+            );
+            club.setCoach(
+                    coachRepo.getById("")
             );
 
             return club;
