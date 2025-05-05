@@ -12,6 +12,7 @@ import java.time.Duration;
 public class PlayerScore {
     private String id;
     private String playerId;
+    private String matchId;
     private Duration minuteOfGoal;
     private Boolean ownGoal;
 }
