@@ -12,10 +12,18 @@ import java.time.LocalDateTime;
 @Data
 public class Match {
     private String id;
-    private Season season;
-    private Championship championship;
+    private String seasonId;
+    private String championshipId;
     private LocalDateTime date;
     private Club homeClub;
     private Club awayClub;
     private EventStatus status;
+
+    public Season getSeason() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Championship getChampionship() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
