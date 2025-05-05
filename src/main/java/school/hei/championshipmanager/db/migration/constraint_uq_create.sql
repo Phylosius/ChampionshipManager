@@ -30,6 +30,6 @@ ALTER TABLE public.player_stats ADD CONSTRAINT player_stats_uk UNIQUE (match_id,
 
 -- object: score_uk | type: CONSTRAINT --
 -- ALTER TABLE public.score DROP CONSTRAINT IF EXISTS score_uk CASCADE;
-ALTER TABLE public.score ADD CONSTRAINT score_uk UNIQUE (player_id,match_id);
+ALTER TABLE public.score ADD CONSTRAINT score_uk UNIQUE (player_id,match_id,minute_of_goal);
 -- ddl-end --
 
