@@ -17,23 +17,25 @@ public class SeasonRepo implements EntityRepo<Season, String> {
 
     @Override
     public List<Season> getAll(Integer page, Integer pageSize) {
-        return baseRepo.getAll("""
-                SELECT
-                id, year, status
-                FROM
-                season
-                """, null, null, null, seasonMapper);
+        return getAllBy(null, null , page, pageSize);
     }
 
     @Override
     public Season getById(String id) throws EntityNotFoundException {
-        return baseRepo.getAll("""
+        return getAllBy("id  = ?", List.of(id), null, null).getFirst();
+    }
+
+    public Season getByYear(Integer year) throws EntityNotFoundException {
+        return getAllBy("year = ?", List.of(year), null, null).getFirst();
+    }
+
+    public List<Season> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
+        return baseRepo.getAllBy("""
                 SELECT
                 id, year, status
                 FROM
                 season
-                WHERE id = ?
-                """, List.of(id), null, null, seasonMapper).getFirst();
+                """, conditionSql, sqlParams, page, pageSize, seasonMapper);
     }
 
     @Override

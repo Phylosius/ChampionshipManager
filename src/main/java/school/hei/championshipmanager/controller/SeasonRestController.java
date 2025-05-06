@@ -1,22 +1,21 @@
 package school.hei.championshipmanager.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import school.hei.championshipmanager.dto.CreateSeasonRest;
+import school.hei.championshipmanager.dto.UpdateSeasonRestStatus;
+import school.hei.championshipmanager.services.SeasonService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/seasons")
 public class SeasonRestController {
+
+    private final SeasonService seasonService;
 
     /**
      * Get list of existing seasons
@@ -24,8 +23,16 @@ public class SeasonRestController {
      * @return List of seasons
      */
     @GetMapping
-    public ResponseEntity<?> getSeasons() {
-        return ResponseEntity.status(501).body("Not implemented.");
+    public ResponseEntity<?> getSeasons(
+         @RequestParam(required = false) Integer page,
+         @RequestParam(required = false) Integer pageSize
+    )
+    {
+        try {
+            return ResponseEntity.ok(seasonService.getSeasons(page, pageSize));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /**
@@ -38,21 +45,31 @@ public class SeasonRestController {
     @PostMapping
     public ResponseEntity<?> createSeasons(
         @RequestBody List<CreateSeasonRest> seasons
-    ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+    )
+    {
+        try {
+            return ResponseEntity.ok(seasonService.createSeasons(seasons));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /**
      * Update a specific season status
      * 
      * Accepted update order : NOT_STARTED > STARTED > FINISHED.
-     * @param seasonYear Date of the season to update status
+     * @param seasonYear Year of the season to update status
      * @return Season with updated status
      */
     @PutMapping("/{seasonYear}/status")
     public ResponseEntity<?> updateSeasonStatus(
-        @PathVariable Integer seasonYear
-    ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+            @PathVariable Integer seasonYear,
+            @RequestParam UpdateSeasonRestStatus updateStatus
+            ) {
+        try {
+            return ResponseEntity.ok(seasonService.updateSeasonStatus(seasonYear, updateStatus.getStatus()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 }

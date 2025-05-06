@@ -2,6 +2,8 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.CreateSeasonRest;
+import school.hei.championshipmanager.dto.SeasonRest;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.model.Season;
 
@@ -36,5 +38,26 @@ public class SeasonMapper implements ModelRepositoryMapper<Season> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public SeasonRest toDTO(Season season) {
+        SeasonRest dto = new SeasonRest();
+
+        dto.setId(season.getId());
+        dto.setYear(season.getYear());
+        dto.setStatus(season.getStatus());
+        dto.setAlias(season.getAlias());
+
+        return dto;
+    }
+
+    public Season toModel(CreateSeasonRest dto) {
+        Season season = new Season();
+
+        season.setYear(dto.getYear());
+        season.setStatus(EventStatus.NOT_STARTED);
+        season.setId(season.getAlias());
+
+        return season;
     }
 }
