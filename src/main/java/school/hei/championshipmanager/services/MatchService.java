@@ -8,13 +8,15 @@ import school.hei.championshipmanager.dto.UpdateMatchRestStatus;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.mappers.MatchMapper;
 import school.hei.championshipmanager.mappers.PlayerScoreMapper;
-import school.hei.championshipmanager.model.Match;
-import school.hei.championshipmanager.model.PlayerScore;
-import school.hei.championshipmanager.repository.MatchRepository;
-import school.hei.championshipmanager.repository.PlayerScoreRepo;
+import school.hei.championshipmanager.model.*;
+import school.hei.championshipmanager.repository.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -24,6 +26,9 @@ public class MatchService {
     private final MatchMapper matchMapper;
     private final PlayerScoreMapper playerScoreMapper;
     private final PlayerScoreRepo playerScoreRepo;
+    private final ChampionshipRepo championshipRepo;
+    private final ClubRepo clubRepo;
+    private final SeasonRepo seasonRepo;
 
     public List<MatchRest> getAllBySeason(
             Integer seasonYear,
@@ -72,5 +77,35 @@ public class MatchService {
 
         matchRepository.getById(matchId);
         return matchMapper.toDTO(match);
+    }
+
+    public List<MatchRest> make(Integer seasonYear) {
+        Championship champ = championshipRepo.getDefault();
+        Season season = seasonRepo.getByYear(seasonYear);
+
+        List<Club> clubs = clubRepo.getAll(null, null);
+        List<Match> madeMatches = new ArrayList<>();
+
+        clubs.forEach(club -> {
+            List<Club> others = new ArrayList<>(clubs).stream()
+                    .filter(c -> !Objects.equals(c.getId(), club.getId())).toList();
+
+            others.forEach(otherClub -> {
+                Match match = new Match();
+
+                match.setId(UUID.randomUUID().toString());
+                match.setStatus(EventStatus.NOT_STARTED);
+                match.setSeasonId(season.getId());
+                match.setChampionshipId(champ.getId());
+                match.setDate(LocalDateTime.now());
+
+                match.setHomeClub(club);
+                match.setAwayClub(otherClub);
+
+                madeMatches.add(match);
+            });
+        });
+
+        return madeMatches.stream().map(matchMapper::toDTO).toList();
     }
 }
