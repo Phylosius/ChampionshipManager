@@ -24,3 +24,6 @@ echo "------- PRIMARY KEY CONSTRAINT creation as user $PG_DB_USER_NAME"
 psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/constraint_pk_create.sql
 echo "------- FOREIGN KEY CONSTRAINT creation as user $PG_DB_USER_NAME"
 psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/constraint_fk_create.sql
+
+echo "------- FUNCTIONAL DATA insertion as user $PG_DB_USER_NAME"
+psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/functionnal_data_insert.sql
