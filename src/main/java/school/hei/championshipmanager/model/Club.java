@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import school.hei.championshipmanager.repository.ChampionshipRepo;
+import school.hei.championshipmanager.repository.ClubPlayerRepository;
+import school.hei.championshipmanager.repository.PlayerRepo;
 
 import java.util.List;
 
@@ -18,7 +20,11 @@ public class Club {
     private String stadiumName;
     private String championshipId;
     private Coach coach;
-    private List<ClubPlayer> players;
+
+    public List<ClubPlayer> getPlayers(ClubPlayerRepository clubPlayerRepository) {
+        return clubPlayerRepository.getAllBy("r.club_id = ? AND is_active = true",
+                List.of(id), null, null);
+    }
 
     public Championship getChampionship(ChampionshipRepo championshipRepo) {
         return championshipRepo.getById(championshipId);

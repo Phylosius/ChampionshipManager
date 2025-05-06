@@ -26,6 +26,16 @@ public class CountryRepo implements EntityRepo<Country, String> {
                 """, null, page, pageSize, countryMapper);
     }
 
+    public Country getByName(String name) throws EntityNotFoundException {
+        return baseRepo.getAll("""
+                SELECT
+                id, name, continent
+                FROM
+                country
+                WHERE name ILIKE ?
+                """, List.of(name), null, null, countryMapper).getFirst();
+    }
+
     @Override
     public Country getById(String id) throws EntityNotFoundException {
         return baseRepo.getAll("""

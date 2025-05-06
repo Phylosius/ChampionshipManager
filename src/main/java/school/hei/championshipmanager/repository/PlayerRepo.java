@@ -36,6 +36,14 @@ public class PlayerRepo implements EntityRepo<Player, String> {
                 """, List.of(id), null, null, playerMapper).getFirst();
     }
 
+    public int save(Player player) {
+        if (exists(player.getId())) {
+            return update(player);
+        } else {
+            return add(player);
+        }
+    }
+
     @Override
     public int add(Player player) throws EntityAlreadyExistException {
         if (exists(player.getId())) {

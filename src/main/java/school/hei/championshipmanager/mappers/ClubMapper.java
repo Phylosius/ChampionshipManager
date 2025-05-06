@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 public class ClubMapper implements ModelRepositoryMapper<Club> {
 
-    private final ClubPlayerRepository clubPlayerRepository;
     private final CoachRepo coachRepo;
     private final CoachMapper coachMapper;
 
@@ -44,10 +43,6 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
             club.setAcronym(rs.getString("acronym"));
             club.setStadiumName(rs.getString("stadium_name"));
             club.setChampionshipId(rs.getString("championship_id"));
-            club.setPlayers(
-                    clubPlayerRepository.getAllBy("r.club_id = ? AND is_active = true",
-                            List.of(club.getId()), null, null)
-            );
             club.setCoach(
                     coachRepo.getById("")
             );

@@ -3,6 +3,7 @@ package school.hei.championshipmanager.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.championshipmanager.dto.ClubPlayerRest;
+import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
 import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
@@ -25,5 +26,12 @@ public class ClubPlayerService {
                                                                         page, pageSize);
 
         return players.stream().map(clubPlayerMapper::toDTO).toList();
+    }
+
+    public List<PlayerRest> createOrUpdatePlayers(List<PlayerRest> players) {
+        List<ClubPlayer> clubPlayers = players.stream().map(clubPlayerMapper::toModel).toList();
+        clubPlayers.forEach(clubPlayerRepository::save);
+
+        return players;
     }
 }

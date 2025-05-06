@@ -52,14 +52,18 @@ public class PlayerRestController {
     /***
      * Create or update players without attaching them into club
      * 
-     * @param players List of players to cfeate or update
+     * @param players List of players to create or update
      * @return List of created or updated players
      */
     @PutMapping
     public ResponseEntity<?> createOrUpdatePlayers(
         @RequestBody List<PlayerRest> players
     ) {
-        return ResponseEntity.status(501).body("Not implemented yet");
+        try {
+            return ResponseEntity.status(201).body(clubPlayerService.createOrUpdatePlayers(players));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /**

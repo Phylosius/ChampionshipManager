@@ -3,6 +3,7 @@ package school.hei.championshipmanager.mappers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.dto.ClubPlayerRest;
+import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.enums.PlayerPosition;
 import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.repository.ClubRepo;
@@ -59,6 +60,22 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ClubPlayer toModel(PlayerRest dto) {
+        ClubPlayer player = new ClubPlayer();
+
+        player.setId(dto.getId());
+        player.setName(dto.getName());
+        player.setAge(dto.getAge());
+        player.setNumber(dto.getNumber());
+        player.setPosition(dto.getPosition());
+        player.setActive(false);
+        player.setCountry(
+                countryRepo.getByName(dto.getNationality())
+        );
+
+        return player;
     }
 
     public ClubPlayerRest toDTO(ClubPlayer player) {
