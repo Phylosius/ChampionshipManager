@@ -2,7 +2,11 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.ScorerRest;
+import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.model.PlayerScore;
+import school.hei.championshipmanager.repository.ClubPlayerRepository;
+import school.hei.championshipmanager.repository.PlayerRepo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class PlayerScoreMapper implements ModelRepositoryMapper<PlayerScore> {
+
+    private final PlayerRepo playerRepo;
+    private final ClubPlayerRepository clubPlayerRepository;
 
     @Override
     public List<?> toCreationParams(PlayerScore playerScore) {
@@ -42,5 +49,18 @@ public class PlayerScoreMapper implements ModelRepositoryMapper<PlayerScore> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ScorerRest toDTO(PlayerScore score) {
+        ScorerRest dto = new ScorerRest();
+        Player player = score.getPlayer(playerRepo);
+
+        dto.setId(player.getId());
+        dto.setName(player.getName());
+        dto.setMinuteOfGoal((int) score.getMinuteOfGoal().toMinutes());
+        dto.setOwnGoal(score.getOwnGoal());
+        dto.setNumber(score.getClubPlayer(clubPlayerRepository).getNumber());
+
+        return dto;
     }
 }

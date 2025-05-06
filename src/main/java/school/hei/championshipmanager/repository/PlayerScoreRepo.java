@@ -25,8 +25,8 @@ public class PlayerScoreRepo implements EntityRepo<PlayerScore, String> {
         return getAllBy("id = ?", List.of(id), null, null).getFirst();
     }
 
-    public List<PlayerScore> getAllByPlayerId(String playerId, Integer page, Integer pageSize) {
-        return getAllBy("player_id = ?", List.of(playerId), page, pageSize);
+    public List<PlayerScore> getAllByPlayerIdAndMatchId(String playerId, String matchId, Integer page, Integer pageSize) {
+        return getAllBy("player_id = ? AND match_id = ?", List.of(playerId, matchId), page, pageSize);
     }
 
     public List<PlayerScore> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {

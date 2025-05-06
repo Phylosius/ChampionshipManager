@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.enums.DurationUnit;
 import school.hei.championshipmanager.services.ClubPlayerService;
+import school.hei.championshipmanager.services.PlayerStatsService;
 
 @AllArgsConstructor
 @RestController
@@ -21,6 +23,7 @@ import school.hei.championshipmanager.services.ClubPlayerService;
 public class PlayerRestController {
 
     private final ClubPlayerService clubPlayerService;
+    private final PlayerStatsService playerStatsService;
 
     /***
      * Get list of players in the championship
@@ -77,9 +80,15 @@ public class PlayerRestController {
     @GetMapping("/{id}/statistics/{seasonYear}")
     public ResponseEntity<?> getStatisticsOfPlayerById(
             @PathVariable String id,
-            @PathVariable Integer seasonYear
-    ) {
-        return ResponseEntity.status(501).body("Not implemented yet");
+            @PathVariable Integer seasonYear,
+            @RequestParam(required = false, defaultValue = "SECOND") DurationUnit durationUnit
+            )
+    {
+        try {
+            return ResponseEntity.ok(playerStatsService.getStatisticsOfPlayerById(id, seasonYear, durationUnit));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
 }

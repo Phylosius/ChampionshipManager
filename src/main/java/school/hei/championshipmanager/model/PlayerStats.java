@@ -7,6 +7,7 @@ import school.hei.championshipmanager.repository.PlayerScoreRepo;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +19,6 @@ public class PlayerStats {
     private Duration playingTime;
 
     public List<PlayerScore> getScores(PlayerScoreRepo playerScoreRepo) {
-        return playerScoreRepo.getAllByPlayerId(playerId, null, null);
+        return playerScoreRepo.getAllByPlayerIdAndMatchId(playerId, matchId, null, null);
     }
 }

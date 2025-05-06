@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import school.hei.championshipmanager.dto.ClubPlayerRest;
 import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
+import school.hei.championshipmanager.mappers.PlayerStatsMapper;
 import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
+import school.hei.championshipmanager.repository.PlayerStatsRepo;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class ClubPlayerService {
 
     private final ClubPlayerRepository clubPlayerRepository;
     private final ClubPlayerMapper clubPlayerMapper;
+    private final PlayerStatsRepo playerStatsRepo;
+    private final PlayerStatsMapper playerStatsMapper;
 
     public List<ClubPlayerRest> getPlayers(String nameContaining, String clubNameContaining,
                                            Integer ageMin, Integer ageMax,

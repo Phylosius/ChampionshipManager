@@ -23,15 +23,26 @@ public class PlayerStatsRepo implements EntityRepo<PlayerStats, String> {
 
     @Override
     public PlayerStats getById(String id) throws EntityNotFoundException {
-        return getAllBy("id = ?", List.of(id), null, null).getFirst();
+        return getAllBy("player_stats.id = ?", List.of(id), null, null).getFirst();
+    }
+
+    public List<PlayerStats> getAllByPlayerIdAndBySeason(String playerId, Integer seasonYear) {
+        return getAllBy("player_stats.player_id = ? AND season.year = ?", List.of(playerId, seasonYear), null, null);
     }
 
     public List<PlayerStats> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
         return baseRepo.getAllBy("""
                 SELECT
-                id, player_id, match_id, playing_time
+                    player_stats.id AS id,
+                    player_stats.player_id AS player_id,
+                    player_stats.match_id AS match_id,
+                    player_stats.playing_time AS playing_time
                 FROM
-                player_stats
+                    player_stats
+                        JOIN match
+                             ON match.id = player_stats.match_id
+                        JOIN season
+                             ON season.id = match.season_id
                 """, conditionSql, sqlParams, page, pageSize, statsMapper);
     }
 
