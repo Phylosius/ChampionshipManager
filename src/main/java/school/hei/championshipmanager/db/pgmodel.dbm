@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.0-beta1" use-changelog="false" max-obj-count="18"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="201,836" last-zoom="1.15" scene-rect="-740,-300,2310.8,1702.92"
+	 last-position="-293,884" last-zoom="1.15" scene-rect="-740,-300,2310.8,1702.92"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -257,7 +257,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="public.&quot;EVENT_STATUS&quot;" length="0"/>
 	</column>
 	<constraint name="match_clubs_ck" type="ck-constr" table="public.match">
-			<expression> <![CDATA[host_team_id <> guest_team_id]]> </expression>
+			<expression> <![CDATA[home_club_id <> away_club_id]]> </expression>
 	</constraint>
 	<constraint name="match_uk" type="uq-constr" table="public.match">
 		<columns names="championship_id,home_club_id,away_club_id" ref-type="src-columns"/>
