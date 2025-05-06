@@ -3,6 +3,7 @@ package school.hei.championshipmanager.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.championshipmanager.dto.MatchRest;
+import school.hei.championshipmanager.dto.UpdateMatchRestStatus;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.mappers.MatchMapper;
 import school.hei.championshipmanager.model.Match;
@@ -30,5 +31,23 @@ public class MatchService {
                 matchAfter, matchBeforeOrEquals);
 
         return matches.stream().map(matchMapper::toDTO).toList();
+    }
+
+    public MatchRest updateMatchStatus(
+            String matchId,
+            UpdateMatchRestStatus matchStatus
+    )
+    {
+        Match match = matchRepository.getById(matchId);
+
+        if (match.getStatus().isAfter(match.getStatus())) {
+            return null;
+        }
+
+        match.setStatus(matchStatus.getStatus());
+
+        matchRepository.update(match);
+
+        return matchMapper.toDTO(match);
     }
 }

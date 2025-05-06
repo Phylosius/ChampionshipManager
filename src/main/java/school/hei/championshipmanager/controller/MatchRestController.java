@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.AddGoalRest;
+import school.hei.championshipmanager.dto.MatchRest;
 import school.hei.championshipmanager.dto.UpdateMatchRestStatus;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.services.MatchService;
@@ -67,7 +68,15 @@ public class MatchRestController {
         @PathVariable String id,
         @RequestBody UpdateMatchRestStatus statusUpdate
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            MatchRest match = matchService.updateMatchStatus(id, statusUpdate);
+            if (match == null) {
+                return ResponseEntity.status(400).body("The status update must follow the following : NOT_STARTED > STARTED > FINISHED");
+            }
+            return ResponseEntity.ok(match);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***
