@@ -17,6 +17,7 @@ import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.services.MatchService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
@@ -85,14 +86,22 @@ public class MatchRestController {
      * Only match with status STARTED can be added goals
      * 
      * @param id the id of the match to update
-     * @param addGoal the new goal to add
+     * @param addGoals the new goals to add
      * @return Match with updated goals
      */
     @PostMapping("/{id}/goals")
     public ResponseEntity<?> addGoals(
         @PathVariable String id,
-        @RequestBody AddGoalRest addGoal
+        @RequestBody List<AddGoalRest> addGoals
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            MatchRest matchRest = matchService.addGoal(id, addGoals);
+            if (matchRest == null) {
+                return ResponseEntity.status(400).body("The match should be STARTED.");
+            }
+            return ResponseEntity.ok(matchRest);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 }

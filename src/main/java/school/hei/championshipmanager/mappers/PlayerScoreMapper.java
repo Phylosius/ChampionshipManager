@@ -2,6 +2,7 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.AddGoalRest;
 import school.hei.championshipmanager.dto.ScorerRest;
 import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.model.PlayerScore;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Component
@@ -49,6 +51,18 @@ public class PlayerScoreMapper implements ModelRepositoryMapper<PlayerScore> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public PlayerScore toModel(String matchId, String playerId, AddGoalRest addGoal) {
+        PlayerScore score = new PlayerScore();
+
+        score.setPlayerId(playerId);
+        score.setMatchId(matchId);
+        score.setId(UUID.randomUUID().toString());
+        score.setOwnGoal(true);
+        score.setMinuteOfGoal(Duration.ofMinutes(addGoal.getMinuteOfGoal()));
+
+        return score;
     }
 
     public ScorerRest toDTO(PlayerScore score) {
