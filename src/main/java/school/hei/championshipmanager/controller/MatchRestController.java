@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.AddGoalRest;
 import school.hei.championshipmanager.dto.MatchRest;
+import school.hei.championshipmanager.dto.SeasonRest;
 import school.hei.championshipmanager.dto.UpdateMatchRestStatus;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.services.MatchService;
@@ -49,7 +50,13 @@ public class MatchRestController {
         @RequestParam(required = false) LocalDateTime matchBeforeOrEquals
     ) {
         try {
-            return ResponseEntity.ok(matchService.getAllBySeason(seasonYear, matchStatus, clubPlayingName, matchAfter, matchBeforeOrEquals));
+            List<MatchRest> retrieved = matchService.getAllBySeason(seasonYear, matchStatus, clubPlayingName, matchAfter, matchBeforeOrEquals);
+
+            if (retrieved == null) {
+                return ResponseEntity.status(404).body(String.format("Season with year %s not found", seasonYear));
+            }
+
+            return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

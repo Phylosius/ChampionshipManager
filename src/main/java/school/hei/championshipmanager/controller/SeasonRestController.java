@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import school.hei.championshipmanager.dto.CreateSeasonRest;
+import school.hei.championshipmanager.dto.SeasonRest;
 import school.hei.championshipmanager.dto.UpdateSeasonRestStatus;
 import school.hei.championshipmanager.services.SeasonService;
 
@@ -67,7 +68,13 @@ public class SeasonRestController {
             @RequestParam UpdateSeasonRestStatus updateStatus
             ) {
         try {
-            return ResponseEntity.ok(seasonService.updateSeasonStatus(seasonYear, updateStatus.getStatus()));
+            SeasonRest retrieved = seasonService.updateSeasonStatus(seasonYear, updateStatus.getStatus());
+
+            if (retrieved == null) {
+                return ResponseEntity.status(404).body("Season not found");
+            }
+
+            return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

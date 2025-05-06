@@ -7,12 +7,11 @@ import school.hei.championshipmanager.mappers.ClubMapper;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
 import school.hei.championshipmanager.model.Club;
 import school.hei.championshipmanager.model.ClubPlayer;
-import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
 import school.hei.championshipmanager.repository.ClubRepo;
 import school.hei.championshipmanager.repository.MatchRepository;
+import school.hei.championshipmanager.repository.SeasonRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,6 +23,7 @@ public class ClubService {
     private final ClubPlayerRepository clubPlayerRepository;
     private final ClubPlayerMapper clubPlayerMapper;
     private final MatchRepository matchRepository;
+    private final SeasonRepo seasonRepo;
 
     public List<ClubRest> getClubs(Integer page, Integer pageSize) {
         List<Club> clubs = clubRepo.getAll(page, pageSize);
@@ -40,6 +40,10 @@ public class ClubService {
     }
 
     public List<PlayerRest> getPlayers(String clubId, Integer page, Integer pageSize) {
+        if (clubRepo.getById(clubId) == null) {
+            return null;
+        }
+
         List<ClubPlayer> players = clubPlayerRepository.getAllByClubId(clubId, page, pageSize);
 
         return players.stream().map(clubPlayerMapper::toPlayerRest).toList();
@@ -47,6 +51,10 @@ public class ClubService {
 
     public List<PlayerRest> updatePlayers(String clubId, List<PlayerRest> players) {
         clubPlayerRepository.deleteAllByClubId(clubId);
+
+        if (clubRepo.getById(clubId) == null) {
+            return null;
+        }
 
         List<ClubPlayer> toSave = players.stream().map(clubPlayerMapper::toModel).toList();
         toSave.forEach(p -> {
@@ -60,6 +68,10 @@ public class ClubService {
     public List<ClubStatisticsRest> getStatistics(Integer seasonYear, Boolean hasToBeClassified) {
         List<Club> clubs = clubRepo.getAll(null, null);
         List<ClubStatisticsRest> stats = clubs.stream().map(c -> clubMapper.toStats(c, seasonYear, matchRepository)).toList();
+
+        if (seasonRepo.getByYear(seasonYear) == null) {
+            return null;
+        }
 
         if (hasToBeClassified) {
             return stats.stream().sorted(ClubStatisticsRest.RANKING_COMPARATOR).toList();

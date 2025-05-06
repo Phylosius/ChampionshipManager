@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.ClubRest;
+import school.hei.championshipmanager.dto.ClubStatisticsRest;
 import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.services.ClubService;
 
@@ -71,7 +72,13 @@ public class ClubRestController {
         @RequestParam(required = false) Integer pageSize
     ) {
         try {
-            return ResponseEntity.ok(clubService.getPlayers(id, page, pageSize));
+            List<PlayerRest> retrieved = clubService.getPlayers(id, page, pageSize);
+
+            if (retrieved == null) {
+                return ResponseEntity.status(404).body(String.format("Club with id %s not found", id));
+            }
+
+            return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
@@ -98,7 +105,13 @@ public class ClubRestController {
         @RequestBody List<PlayerRest> players
     ) {
         try {
-            return ResponseEntity.ok(clubService.updatePlayers(id, players));
+            List<PlayerRest> retrieved = clubService.updatePlayers(id, players);
+
+            if (retrieved == null) {
+                return ResponseEntity.status(404).body(String.format("Club with id %s not found", id));
+            }
+
+            return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
@@ -117,7 +130,13 @@ public class ClubRestController {
         @RequestParam(required = false, defaultValue = "false") Boolean hasToBeClassified
     ) {
         try {
-            return ResponseEntity.ok(clubService.getStatistics(seasonYear, hasToBeClassified));
+            List<ClubStatisticsRest> retrieved = clubService.getStatistics(seasonYear, hasToBeClassified);
+
+            if (retrieved == null) {
+                return ResponseEntity.status(404).body("Season " + seasonYear + " not found");
+            }
+
+            return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

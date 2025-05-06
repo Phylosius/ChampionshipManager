@@ -38,6 +38,10 @@ public class MatchService {
             LocalDateTime matchBeforeOrEquals
     )
     {
+        if (seasonRepo.getByYear(seasonYear) == null) {
+            return null;
+        }
+
         List<Match> matches = matchRepository.getAll(seasonYear, matchStatus, clubPlayingName,
                 matchAfter, matchBeforeOrEquals);
 
