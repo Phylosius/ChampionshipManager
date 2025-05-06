@@ -23,21 +23,26 @@ public class MatchRepository implements EntityRepo<Match, String> {
 
     @Override
     public Match getById(String id) throws EntityNotFoundException {
-        return getAllBy("id = ?", List.of(id), null, null).getFirst();
+        return getAllBy("match.id = ?", List.of(id), null, null).getFirst();
+    }
+
+    public List<Match> getAllBySeasonYearAndClubId(Integer seasonYear, String clubId) {
+        return getAllBy("(match.home_club_id = ? OR match.away_club_id = ?) AND season.year = ?", List.of(clubId, clubId, seasonYear), null, null);
     }
 
     public List<Match> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
         return baseRepo.getAllBy("""
                 SELECT
-                id,
-                season_id,
-                championship_id,
-                home_club_id,
-                away_club_id,
-                date,
-                status
+                match.id,
+                match.season_id,
+                match.championship_id,
+                match.home_club_id,
+                match.away_club_id,
+                match.date,
+                match.status
                 
                 FROM match
+                 JOIN season ON season.id = match.season_id
                 """, conditionSql, sqlParams, page, pageSize, mapper);
 
     }

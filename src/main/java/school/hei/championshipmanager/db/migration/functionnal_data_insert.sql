@@ -49,3 +49,12 @@ INSERT INTO country (id, name, continent) VALUES
   ('UA', 'Ukraine', 'EUROPE'),
   ('GB', 'United Kingdom', 'EUROPE'),
   ('VA', 'Vatican City', 'EUROPE');
+
+
+INSERT INTO public.championship (id, name, country_id) VALUES
+   ('EPL', 'Premier League', 'GB'),
+   ('LALIGA', 'La Liga', 'ES'),
+   ('BUNDESLIGA', 'Bundesliga', 'DE'),
+   ('SERIEA', 'Seria A', 'IT'),
+   ('LIGUE1', 'Ligue 1', 'FR');
+

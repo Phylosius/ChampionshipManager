@@ -6,6 +6,7 @@ import school.hei.championshipmanager.dto.ClubPlayerRest;
 import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.enums.PlayerPosition;
 import school.hei.championshipmanager.model.ClubPlayer;
+import school.hei.championshipmanager.model.Country;
 import school.hei.championshipmanager.repository.ClubRepo;
 import school.hei.championshipmanager.repository.CountryRepo;
 
@@ -79,6 +80,11 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
     }
 
     public ClubPlayerRest toDTO(ClubPlayer player) {
+
+        return new ClubPlayerRest(toPlayerRest(player), clubMapper.toDTO(player.getClub(clubRepo)));
+    }
+
+    public PlayerRest toPlayerRest(ClubPlayer player) {
         ClubPlayerRest dto = new ClubPlayerRest();
 
         dto.setId(player.getId());
@@ -87,9 +93,6 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
         dto.setNumber(player.getNumber());
         dto.setPosition(player.getPosition());
         dto.setNationality(player.getCountry().getName());
-        dto.setClub(
-                clubMapper.toDTO(player.getClub(clubRepo))
-        );
 
         return dto;
     }

@@ -7,6 +7,7 @@ import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.PlayerStatsMapper;
 import school.hei.championshipmanager.model.PlayerStats;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,8 +27,16 @@ public class PlayerStatsRepo implements EntityRepo<PlayerStats, String> {
         return getAllBy("player_stats.id = ?", List.of(id), null, null).getFirst();
     }
 
-    public List<PlayerStats> getAllByPlayerIdAndBySeason(String playerId, Integer seasonYear) {
-        return getAllBy("player_stats.player_id = ? AND season.year = ?", List.of(playerId, seasonYear), null, null);
+    public List<PlayerStats> getAll(String playerId, Integer seasonYear, String matchId) {
+        String conditionSql = "player_stats.player_id = ? AND season.year = ?";
+        List<Object> params = new ArrayList<>(List.of(playerId, seasonYear));
+
+        if (matchId != null) {
+            conditionSql += " AND player_stats.match_id = ?";
+            params.add(matchId);
+        }
+
+        return getAllBy(conditionSql, params, null, null);
     }
 
     public List<PlayerStats> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {

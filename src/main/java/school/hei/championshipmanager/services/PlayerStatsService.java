@@ -16,7 +16,7 @@ public class PlayerStatsService {
     private final PlayerStatsRepo playerStatsRepo;
 
     public PlayerStatisticsRest getStatisticsOfPlayerById(String playerId, Integer seasonYear, DurationUnit durationUnit) {
-        PlayerStats stats = playerStatsRepo.getAllByPlayerIdAndBySeason(playerId, seasonYear).getFirst();
+        PlayerStats stats = playerStatsRepo.getAll(playerId, seasonYear, null).getFirst();
 
         return playerStatsMapper.toDTO(stats, durationUnit);
     }

@@ -28,6 +28,10 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
         return getAllBy("r.id = ?", List.of(roleId), null, null).getFirst();
     }
 
+    public List<ClubPlayer> getAllByClubId(String clubId, Integer page, Integer pageSize) {
+        return getAllBy("r.club_id = ?", List.of(clubId), page, pageSize);
+    }
+
     public List<ClubPlayer> getAllFiltered(String nameContaining, String clubNameContaining, Integer ageMin, Integer ageMax, Integer page, Integer pageSize) {
         StringBuilder conditionSql = null;
         List<Object> sqlParams = null;
@@ -116,6 +120,10 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     @Override
     public int delete(String id) throws EntityNotFoundException {
         return baseRepo.delete("DELETE FROM player_role WHERE id = ?", id);
+    }
+
+    public int deleteAllByClubId(String clubId) {
+        return baseRepo.delete("DELETE FROM player_role WHERE clubId = ?", clubId);
     }
 
     public Boolean isExists(ClubPlayer player) throws EntityNotFoundException {

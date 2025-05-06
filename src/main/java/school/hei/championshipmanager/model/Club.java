@@ -3,11 +3,12 @@ package school.hei.championshipmanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import school.hei.championshipmanager.repository.ChampionshipRepo;
-import school.hei.championshipmanager.repository.ClubPlayerRepository;
-import school.hei.championshipmanager.repository.PlayerRepo;
+import school.hei.championshipmanager.enums.MatchStatType;
+import school.hei.championshipmanager.enums.PlayingClubSide;
+import school.hei.championshipmanager.repository.*;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,5 +29,52 @@ public class Club {
 
     public Championship getChampionship(ChampionshipRepo championshipRepo) {
         return championshipRepo.getById(championshipId);
+    }
+
+    public Integer getScoredGoals(ClubPlayerRepository clubPlayerRepository, PlayerStatsRepo playerStatsRepo,
+                                   PlayerScoreRepo playerScoreRepo, Integer seasonYear, String matchId, Boolean excludeOwned)
+    {
+        AtomicInteger scoredGoals = new AtomicInteger(0);
+        List<ClubPlayer> players = getPlayers(clubPlayerRepository);
+        players.forEach(p -> {
+            scoredGoals.set(
+                    scoredGoals.get() + p.getScoredGoals(playerStatsRepo, playerScoreRepo, seasonYear, matchId, excludeOwned)
+            );
+        });
+
+        return scoredGoals.get();
+    }
+
+    public List<Match> getMatches(MatchRepository matchRepository, Integer seasonYear) {
+        return matchRepository.getAllBySeasonYearAndClubId(seasonYear, id);
+    }
+
+    public Integer getStat(List<Match> matches, MatchStatType statType,
+                           ClubPlayerRepository clubPlayerRepository,
+                           PlayerStatsRepo playerStatsRepo, PlayerScoreRepo playerScoreRepo,
+                           SeasonRepo seasonRepo)
+    {
+        AtomicInteger stat = new AtomicInteger(0);
+
+        matches.forEach(m -> {
+            PlayingClubSide side;
+
+            if (m.getHomeClub().getId().equals(id)) {
+                side = PlayingClubSide.HOME;
+            } else if (m.getAwayClub().getId().equals(id)) {
+                side = PlayingClubSide.AWAY;
+            } else {
+                side = null;
+            }
+
+            stat.set(
+                    stat.get() + m.getStat(side, statType,
+                            clubPlayerRepository,
+                            playerStatsRepo, playerScoreRepo,
+                            seasonRepo)
+            );
+        });
+
+        return stat.get();
     }
 }

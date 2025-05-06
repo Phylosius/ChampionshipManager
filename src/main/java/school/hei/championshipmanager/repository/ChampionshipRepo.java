@@ -1,6 +1,8 @@
 package school.hei.championshipmanager.repository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import school.hei.championshipmanager.exeptions.EntityAlreadyExistException;
 import school.hei.championshipmanager.exeptions.EntityNotFoundException;
@@ -9,12 +11,24 @@ import school.hei.championshipmanager.model.Championship;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Repository
 public class ChampionshipRepo implements EntityRepo<Championship, String> {
 
     private final ChampionshipMapper championshipMapper;
     private final BaseRepo<Championship> baseRepo;
+
+    @Value("${app.championship.id}")
+    private String defaultChampionshipId;
+
+    @Autowired
+    public ChampionshipRepo(ChampionshipMapper championshipMapper, BaseRepo<Championship> baseRepo) {
+        this.championshipMapper = championshipMapper;
+        this.baseRepo = baseRepo;
+    }
+
+    public Championship getDefault() {
+        return getById(defaultChampionshipId);
+    }
 
     @Override
     public List<Championship> getAll(Integer page, Integer pageSize) {

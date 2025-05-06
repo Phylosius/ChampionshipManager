@@ -2,6 +2,7 @@ package school.hei.championshipmanager.controller;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,19 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import school.hei.championshipmanager.dto.ClubRest;
 import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.services.ClubService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/clubs")
 public class ClubRestController {
-    
+
+    private final ClubService clubService;
+
     /***
      * Get clubs of the championship
      * 
      * @return List of the clubs
      */
     @GetMapping
-    public ResponseEntity<?> getClubs() {
-        return ResponseEntity.status(501).body("Not implemented.");
+    public ResponseEntity<?> getClubs(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize
+    )
+    {
+        try {
+            return ResponseEntity.ok(clubService.getClubs(page, pageSize));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***
@@ -38,7 +51,11 @@ public class ClubRestController {
     public ResponseEntity<?> createOrUpdateClubs(
         @RequestBody List<ClubRest> clubs
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            return ResponseEntity.ok(clubService.createOrUpdateClubs(clubs));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***
@@ -49,9 +66,15 @@ public class ClubRestController {
      */
     @GetMapping("/{id}/players")
     public ResponseEntity<?> getPlayers(
-        @PathVariable String id
+        @PathVariable String id,
+        @RequestParam(required = false) Integer page,
+        @RequestParam(required = false) Integer pageSize
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            return ResponseEntity.ok(clubService.getPlayers(id, page, pageSize));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***
@@ -74,7 +97,11 @@ public class ClubRestController {
         @PathVariable String id,
         @RequestBody List<PlayerRest> players
     ) {
-        return ResponseEntity.status(501).body("Not Implemented.");
+        try {
+            return ResponseEntity.ok(clubService.updatePlayers(id, players));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /***
@@ -87,8 +114,12 @@ public class ClubRestController {
     @GetMapping("/statistics/{seasonYear}")
     public ResponseEntity<?> getStatistics(
         @PathVariable Integer seasonYear,
-        @RequestParam(required = false) Boolean hasToBeClassified
+        @RequestParam(required = false, defaultValue = "false") Boolean hasToBeClassified
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            return ResponseEntity.ok(clubService.getStatistics(seasonYear, hasToBeClassified));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 }

@@ -11,4 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class ClubPlayerRest extends PlayerRest {
     private ClubRest club;
+
+    public ClubPlayerRest(PlayerRest player, ClubRest club) {
+        super(player);
+        this.club = club;
+    }
 }

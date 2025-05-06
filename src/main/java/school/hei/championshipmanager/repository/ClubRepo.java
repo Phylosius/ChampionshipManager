@@ -35,6 +35,14 @@ public class ClubRepo implements EntityRepo<Club, String> {
                 """, conditionSql, sqlParams, page, pageSize, clubMapper);
     }
 
+    public int save(Club club) {
+        if (exists(club)) {
+            return update(club);
+        } else {
+            return add(club);
+        }
+    }
+
     @Override
     public int add(Club club) throws EntityAlreadyExistException {
         return baseRepo.add("""
@@ -63,5 +71,9 @@ public class ClubRepo implements EntityRepo<Club, String> {
         return baseRepo.delete("""
                 DELETE FROM club WHERE id = ?
                 """, id);
+    }
+
+    public Boolean exists(Club club) {
+        return baseRepo.isExists("SELECT COUNT(*) FROM club WHERE id = ?", club.getId());
     }
 }

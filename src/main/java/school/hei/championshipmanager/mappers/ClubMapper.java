@@ -3,9 +3,11 @@ package school.hei.championshipmanager.mappers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.dto.ClubRest;
+import school.hei.championshipmanager.dto.ClubStatisticsRest;
+import school.hei.championshipmanager.enums.MatchStatType;
 import school.hei.championshipmanager.model.Club;
-import school.hei.championshipmanager.repository.ClubPlayerRepository;
-import school.hei.championshipmanager.repository.CoachRepo;
+import school.hei.championshipmanager.model.Match;
+import school.hei.championshipmanager.repository.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +19,12 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
 
     private final CoachRepo coachRepo;
     private final CoachMapper coachMapper;
+    private final ChampionshipRepo championshipRepo;
+    private final MatchRepository matchRepository;
+    private final ClubPlayerRepository clubPlayerRepository;
+    private final PlayerScoreRepo playerScoreRepo;
+    private final PlayerStatsRepo playerStatsRepo;
+    private final SeasonRepo seasonRepo;
 
     @Override
     public List<?> toCreationParams(Club club) {
@@ -66,5 +74,57 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
         );
 
         return dto;
+    }
+
+    public Club toModel(ClubRest dto) {
+        Club club = new Club();
+
+        club.setId(dto.getId());
+        club.setName(dto.getName());
+        club.setAcronym(dto.getAcronym());
+        club.setCreationYear(dto.getYearCreation());
+        club.setChampionshipId(championshipRepo.getDefault().getId());
+
+        return club;
+    }
+
+    public ClubStatisticsRest toStats (Club club, Integer seasonYear) {
+        ClubStatisticsRest stats = new ClubStatisticsRest();
+
+        stats.setId(club.getId());
+        stats.setName(club.getName());
+        stats.setAcronym(club.getAcronym());
+        stats.setStadium(club.getStadiumName());
+        stats.setYearCreation(club.getCreationYear());
+        stats.setCoach(coachMapper.toDTO(club.getCoach()));
+
+        List<Match> matches = club.getMatches(matchRepository, seasonYear);
+        stats.setRankingPoint(
+                club.getStat(matches, MatchStatType.RANKING_POINT,
+                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonRepo)
+        );
+        stats.setScoredGoals(
+                club.getStat(matches, MatchStatType.SCORED_GOAL,
+                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonRepo)
+        );
+        stats.setDifferenceGoals(
+                club.getStat(matches, MatchStatType.DIFFERENCE_GOAL,
+                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonRepo)
+        );
+        stats.setConcededGoals(
+                club.getStat(matches, MatchStatType.CONCEDED_GOAL,
+                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonRepo)
+        );
+        stats.setCleanSheetNumber(
+                club.getStat(matches, MatchStatType.CLEAN_SHEET_POINT,
+                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonRepo)
+        );
+
+        return stats;
     }
 }
