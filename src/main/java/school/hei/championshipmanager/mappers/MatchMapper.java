@@ -2,9 +2,11 @@ package school.hei.championshipmanager.mappers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import school.hei.championshipmanager.dto.MatchRest;
 import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.model.Match;
 import school.hei.championshipmanager.repository.ClubRepo;
+import school.hei.championshipmanager.repository.SeasonRepo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ import java.util.List;
 public class MatchMapper implements ModelRepositoryMapper<Match> {
 
     private final ClubRepo clubRepo;
+    private final ClubMapper clubMapper;
+    private final SeasonRepo seasonRepo;
 
     @Override
     public List<?> toCreationParams(Match match) {
@@ -51,5 +55,22 @@ public class MatchMapper implements ModelRepositoryMapper<Match> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public MatchRest toDTO(Match match) {
+        MatchRest dto = new MatchRest();
+
+        dto.setId(match.getId());
+        dto.setClubPlayingHome(
+                clubMapper.toMatchClub(match.getHomeClub(), match, match.getSeason(seasonRepo).getYear())
+        );
+        dto.setClubPlayingAway(
+                clubMapper.toMatchClub(match.getAwayClub(), match, match.getSeason(seasonRepo).getYear())
+        );
+        dto.setStadium(match.getHomeClub().getStadiumName());
+        dto.setActualStatus(match.getStatus());
+        dto.setMatchDateTime(match.getDate());
+
+        return dto;
     }
 }

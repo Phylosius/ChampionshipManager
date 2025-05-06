@@ -2,11 +2,15 @@ package school.hei.championshipmanager.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import school.hei.championshipmanager.enums.EventStatus;
 import school.hei.championshipmanager.exeptions.EntityAlreadyExistException;
 import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.MatchMapper;
 import school.hei.championshipmanager.model.Match;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,6 +32,35 @@ public class MatchRepository implements EntityRepo<Match, String> {
 
     public List<Match> getAllBySeasonYearAndClubId(Integer seasonYear, String clubId) {
         return getAllBy("(match.home_club_id = ? OR match.away_club_id = ?) AND season.year = ?", List.of(clubId, clubId, seasonYear), null, null);
+    }
+
+    public List<Match> getAll(Integer seasonYear, EventStatus matchStatus, String clubPlayingName,
+                              LocalDateTime matchAfter, LocalDateTime matchBeforeOrEquals)
+    {
+        StringBuilder sql = new StringBuilder("season.year = ?");
+        List<Object> params = new ArrayList<>(List.of(seasonYear));
+
+        if (matchStatus != null) {
+            sql.append(" AND match.status = ?");
+            params.add(matchStatus);
+        }
+
+        if (clubPlayingName != null) {
+            sql.append(" AND match.home_club_id ILIKE %?%");
+            params.add(clubPlayingName);
+        }
+
+        if (matchAfter != null) {
+            sql.append(" AND match.home_time > ?");
+            params.add(matchAfter);
+        }
+
+        if (matchBeforeOrEquals != null) {
+            sql.append(" AND match.home_time <= ?");
+            params.add(matchBeforeOrEquals);
+        }
+
+        return getAllBy(sql.toString(), params, null, null);
     }
 
     public List<Match> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {

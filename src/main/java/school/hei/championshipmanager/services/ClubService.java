@@ -2,10 +2,7 @@ package school.hei.championshipmanager.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.hei.championshipmanager.dto.ClubPlayerRest;
-import school.hei.championshipmanager.dto.ClubRest;
-import school.hei.championshipmanager.dto.ClubStatisticsRest;
-import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.dto.*;
 import school.hei.championshipmanager.mappers.ClubMapper;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
 import school.hei.championshipmanager.model.Club;
@@ -13,6 +10,7 @@ import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
 import school.hei.championshipmanager.repository.ClubRepo;
+import school.hei.championshipmanager.repository.MatchRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ public class ClubService {
     private final ClubMapper clubMapper;
     private final ClubPlayerRepository clubPlayerRepository;
     private final ClubPlayerMapper clubPlayerMapper;
+    private final MatchRepository matchRepository;
 
     public List<ClubRest> getClubs(Integer page, Integer pageSize) {
         List<Club> clubs = clubRepo.getAll(page, pageSize);
@@ -60,7 +59,7 @@ public class ClubService {
 
     public List<ClubStatisticsRest> getStatistics(Integer seasonYear, Boolean hasToBeClassified) {
         List<Club> clubs = clubRepo.getAll(null, null);
-        List<ClubStatisticsRest> stats = clubs.stream().map(c -> clubMapper.toStats(c, seasonYear)).toList();
+        List<ClubStatisticsRest> stats = clubs.stream().map(c -> clubMapper.toStats(c, seasonYear, matchRepository)).toList();
 
         if (hasToBeClassified) {
             return stats.stream().sorted(ClubStatisticsRest.RANKING_COMPARATOR).toList();
@@ -68,5 +67,4 @@ public class ClubService {
             return stats.stream().sorted(ClubStatisticsRest.NAME_ASC_COMPARATOR).toList();
         }
     }
-
 }

@@ -7,7 +7,6 @@ import school.hei.championshipmanager.repository.PlayerScoreRepo;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor

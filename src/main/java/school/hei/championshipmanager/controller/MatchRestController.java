@@ -13,16 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 import school.hei.championshipmanager.dto.AddGoalRest;
 import school.hei.championshipmanager.dto.UpdateMatchRestStatus;
 import school.hei.championshipmanager.enums.EventStatus;
+import school.hei.championshipmanager.services.MatchService;
+
+import java.time.LocalDateTime;
 
 
 @RestController
 @RequestMapping("/matches")
 public class MatchRestController {
 
+    private final MatchService matchService;
+
+    public MatchRestController(MatchService matchService) {
+        this.matchService = matchService;
+    }
+
     /**
      * Get all matches for a given season year.
      *
-     * @param seasonDate the date of the season
+     * @param seasonYear the date of the season
      * @param matchStatus the status of the match (optional)
      * @param clubPlayingName the name of the club playing (optional)
      * @param matchAfter the date after which to get matches (optional, provided with matchBeforeOrEquals)
@@ -31,13 +40,17 @@ public class MatchRestController {
      */
     @GetMapping("/{seasonYear}")
     public ResponseEntity<?> getAllBySeason(
-        @PathVariable Integer seasonDate,
+        @PathVariable Integer seasonYear,
         @RequestParam(required = false) EventStatus matchStatus,
         @RequestParam(required = false) String clubPlayingName,
-        @RequestParam(required = false) Integer matchAfter,
-        @RequestParam(required = false) Integer matchBeforeOrEquals
+        @RequestParam(required = false) LocalDateTime matchAfter,
+        @RequestParam(required = false) LocalDateTime matchBeforeOrEquals
     ) {
-        return ResponseEntity.status(501).body("Not implemented.");
+        try {
+            return ResponseEntity.ok(matchService.getAllBySeason(seasonYear, matchStatus, clubPlayingName, matchAfter, matchBeforeOrEquals));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     /**

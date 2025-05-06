@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.championshipmanager.dto.ClubPlayerRest;
 import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.mappers.ClubMapper;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
-import school.hei.championshipmanager.mappers.PlayerStatsMapper;
 import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
-import school.hei.championshipmanager.repository.PlayerStatsRepo;
+import school.hei.championshipmanager.repository.ClubRepo;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ public class ClubPlayerService {
 
     private final ClubPlayerRepository clubPlayerRepository;
     private final ClubPlayerMapper clubPlayerMapper;
-    private final PlayerStatsRepo playerStatsRepo;
-    private final PlayerStatsMapper playerStatsMapper;
+    private final ClubMapper clubMapper;
+    private final ClubRepo clubRepo;
 
     public List<ClubPlayerRest> getPlayers(String nameContaining, String clubNameContaining,
                                            Integer ageMin, Integer ageMax,
@@ -29,7 +29,7 @@ public class ClubPlayerService {
                                                                         ageMin, ageMax,
                                                                         page, pageSize);
 
-        return players.stream().map(clubPlayerMapper::toDTO).toList();
+        return players.stream().map(p -> clubPlayerMapper.toDTO(p, clubMapper, clubRepo)).toList();
     }
 
     public List<PlayerRest> createOrUpdatePlayers(List<PlayerRest> players) {

@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.dto.ClubRest;
 import school.hei.championshipmanager.dto.ClubStatisticsRest;
+import school.hei.championshipmanager.dto.MatchClub;
 import school.hei.championshipmanager.enums.MatchStatType;
 import school.hei.championshipmanager.model.Club;
 import school.hei.championshipmanager.model.Match;
+import school.hei.championshipmanager.model.PlayerScore;
 import school.hei.championshipmanager.repository.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,11 +23,11 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
     private final CoachRepo coachRepo;
     private final CoachMapper coachMapper;
     private final ChampionshipRepo championshipRepo;
-    private final MatchRepository matchRepository;
     private final ClubPlayerRepository clubPlayerRepository;
     private final PlayerScoreRepo playerScoreRepo;
     private final PlayerStatsRepo playerStatsRepo;
     private final SeasonRepo seasonRepo;
+    private final PlayerScoreMapper playerScoreMapper;
 
     @Override
     public List<?> toCreationParams(Club club) {
@@ -76,6 +79,26 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
         return dto;
     }
 
+    public MatchClub toMatchClub(Club club, Match match, Integer seasonYear) {
+        MatchClub dto = new MatchClub();
+
+        dto.setId(club.getId());
+        dto.setName(club.getName());
+        dto.setAcronym(club.getAcronym());
+        dto.setScore(
+                club.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                        seasonYear, match.getId(), true)
+        );
+
+        List<PlayerScore> playerScores = new ArrayList<>(club.getPlayerScores(seasonYear, match.getId(),
+                clubPlayerRepository, playerStatsRepo, playerScoreRepo));
+        dto.setScrorers(
+                playerScores.stream().map(playerScoreMapper::toDTO).toList()
+        );
+
+        return dto;
+    }
+
     public Club toModel(ClubRest dto) {
         Club club = new Club();
 
@@ -88,7 +111,7 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
         return club;
     }
 
-    public ClubStatisticsRest toStats (Club club, Integer seasonYear) {
+    public ClubStatisticsRest toStats (Club club, Integer seasonYear, MatchRepository matchRepository) {
         ClubStatisticsRest stats = new ClubStatisticsRest();
 
         stats.setId(club.getId());

@@ -7,6 +7,7 @@ import school.hei.championshipmanager.enums.MatchStatType;
 import school.hei.championshipmanager.enums.PlayingClubSide;
 import school.hei.championshipmanager.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,8 +23,19 @@ public class Club {
     private String championshipId;
     private Coach coach;
 
+    public List<PlayerScore> getPlayerScores(Integer seasonYear, String matchId, ClubPlayerRepository clubPlayerRepository, PlayerStatsRepo playerStatsRepo, PlayerScoreRepo playerScoreRepo) {
+        List<PlayerScore> playerScores = new ArrayList<>();
+
+        getPlayers(clubPlayerRepository).forEach(playerScore -> {
+                   playerScore.getStats(playerStatsRepo, seasonYear, matchId)
+                           .forEach(p_s -> playerScores.addAll(p_s.getScores(playerScoreRepo)));
+        });
+
+        return playerScores;
+    }
+
     public List<ClubPlayer> getPlayers(ClubPlayerRepository clubPlayerRepository) {
-        return clubPlayerRepository.getAllBy("r.club_id = ? AND is_active = true",
+        return clubPlayerRepository.getAllBy("r.club_id = ? AND r.is_active = true",
                 List.of(id), null, null);
     }
 

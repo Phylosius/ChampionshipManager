@@ -6,7 +6,6 @@ import school.hei.championshipmanager.dto.ClubPlayerRest;
 import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.enums.PlayerPosition;
 import school.hei.championshipmanager.model.ClubPlayer;
-import school.hei.championshipmanager.model.Country;
 import school.hei.championshipmanager.repository.ClubRepo;
 import school.hei.championshipmanager.repository.CountryRepo;
 
@@ -19,8 +18,6 @@ import java.util.List;
 public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
 
     private final CountryRepo countryRepo;
-    private final ClubMapper clubMapper;
-    private final ClubRepo clubRepo;
 
     @Override
     public List<?> toCreationParams(ClubPlayer clubPlayer) {
@@ -79,7 +76,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
         return player;
     }
 
-    public ClubPlayerRest toDTO(ClubPlayer player) {
+    public ClubPlayerRest toDTO(ClubPlayer player, ClubMapper clubMapper, ClubRepo clubRepo) {
 
         return new ClubPlayerRest(toPlayerRest(player), clubMapper.toDTO(player.getClub(clubRepo)));
     }
