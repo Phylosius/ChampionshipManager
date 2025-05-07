@@ -4,26 +4,26 @@ PG_SUPERUSER_NAME=postgres
 PG_SUPERUSER_DB=postgres
 
 PG_DB_USER_NAME=championship_manager_user
-PG_DB_USER_DB=championship_manager
+PG_DB_USER_DB="championship_manager_$1"
 
 echo "------- SESSION set up as user postgres"
 psql -U $PG_SUPERUSER_NAME -d $PG_SUPERUSER_DB -f ./migration/01_sessionopts.sql
 echo "------- ROLE creation as user postgres"
 psql -U $PG_SUPERUSER_NAME -d $PG_SUPERUSER_DB -f ./migration/role_create.sql
 echo "------- DATABASE creation as user postgres"
-psql -U $PG_SUPERUSER_NAME -d $PG_SUPERUSER_DB -f ./migration/database_create.sql
+psql -U $PG_SUPERUSER_NAME -d $PG_SUPERUSER_DB -c "CREATE DATABASE $PG_DB_USER_DB OWNER = championship_manager_user;"
 
 echo "------- EXTENSION creation as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/extension_create.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/extension_create.sql
 echo "------- USERTYPE creation as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/usertype_create.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/usertype_create.sql
 echo "------- TABLE creation as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/table_create.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/table_create.sql
 
 echo "------- PRIMARY KEY CONSTRAINT creation as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/constraint_pk_create.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/constraint_pk_create.sql
 echo "------- FOREIGN KEY CONSTRAINT creation as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/constraint_fk_create.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/constraint_fk_create.sql
 
 echo "------- FUNCTIONAL DATA insertion as user $PG_DB_USER_NAME"
-psql -U $PG_DB_USER_NAME -d $PG_DB_USER_DB -f ./migration/functionnal_data_insert.sql
+psql -U $PG_DB_USER_NAME -d "$PG_DB_USER_DB" -f ./migration/functionnal_data_insert.sql
