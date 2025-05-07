@@ -19,7 +19,7 @@ public class PlayerRepo implements EntityRepo<Player, String> {
     public List<Player> getAll(Integer page, Integer pageSize) {
         return baseRepo.getAll("""
                 SELECT
-                id, name, age, country_id
+                id, name, age, nationality
                 FROM
                 player
                 """, null, null, null, playerMapper);
@@ -29,7 +29,7 @@ public class PlayerRepo implements EntityRepo<Player, String> {
     public Player getById(String id) throws EntityNotFoundException {
         return baseRepo.getAll("""
                 SELECT
-                id, name, age, country_id
+                id, name, age, nationality
                 FROM
                 player
                 WHERE id = ?
@@ -52,7 +52,7 @@ public class PlayerRepo implements EntityRepo<Player, String> {
 
         return baseRepo.add("""
                 INSERT INTO player
-                (id, name, age, country_id)
+                (id, name, age, nationality)
                 VALUES
                 (?, ?, ?, ?)
                 """, player, playerMapper);
@@ -62,7 +62,7 @@ public class PlayerRepo implements EntityRepo<Player, String> {
     public int update(Player player) {
         return baseRepo.update("""
                 UPDATE player
-                SET name = ?, age = ?, country_id = ?
+                SET name = ?, age = ?, nationality = ?
                 WHERE id = ?
                 """, player, playerMapper);
     }

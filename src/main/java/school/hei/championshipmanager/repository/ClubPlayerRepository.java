@@ -41,12 +41,12 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
             sqlParams = new ArrayList<>();
 
             if (nameContaining != null) {
-                conditionSql.append("p.name ILIKE %?%");
+                conditionSql.append("p.name ILIKE '%' || ? || '%'");
                 sqlParams.add(nameContaining);
             }
 
             if (clubNameContaining != null) {
-                conditionSql.append("c.name ILIKE %?%");
+                conditionSql.append("c.name ILIKE '%' || ? || '%'");
                 sqlParams.add(clubNameContaining);
             }
 

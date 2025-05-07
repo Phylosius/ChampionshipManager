@@ -20,6 +20,10 @@ public class CoachRepo implements EntityRepo<Coach, String> {
         return getAllBy(null, null, page, pageSize);
     }
 
+    public Coach getByClubId(String id) {
+        return getAllBy("club_id = ?", List.of(id), null, null).getFirst();
+    }
+
     @Override
     public Coach getById(String id) throws EntityNotFoundException {
         return getAllBy("id = ?", List.of(id), null, null).getFirst();
@@ -28,7 +32,7 @@ public class CoachRepo implements EntityRepo<Coach, String> {
     public List<Coach> getAllBy(String conditionSql, List<?> sqlParams, Integer page, Integer pageSize) {
         return baseRepo.getAllBy("""
                 SELECT
-                id, name, country_id, club_id
+                id, name, nationality, club_id
                 FROM
                 coach
                 """, conditionSql, sqlParams, page, pageSize, coachMapper);
@@ -42,7 +46,7 @@ public class CoachRepo implements EntityRepo<Coach, String> {
 
         return baseRepo.add("""
                 INSERT INTO coach
-                (id, name, country_id, club_id)
+                (id, name, nationality, club_id)
                 VALUES
                 (?, ?, ?, ?)
                 """, coach, coachMapper);
@@ -52,7 +56,7 @@ public class CoachRepo implements EntityRepo<Coach, String> {
     public int update(Coach coach) {
         return baseRepo.update("""
                 UPDATE coach
-                SET name = ?, country_id = ?, club_id = ?
+                SET name = ?, nationality = ?, club_id = ?
                 WHERE id = ?
                 """, coach, coachMapper);
     }

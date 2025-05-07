@@ -55,7 +55,7 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
             club.setStadiumName(rs.getString("stadium_name"));
             club.setChampionshipId(rs.getString("championship_id"));
             club.setCoach(
-                    coachRepo.getById("")
+                    coachRepo.getByClubId(club.getId())
             );
 
             return club;

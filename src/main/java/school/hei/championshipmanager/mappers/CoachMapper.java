@@ -35,7 +35,7 @@ public class CoachMapper implements ModelRepositoryMapper<Coach> {
             coach.setId(rs.getString("id"));
             coach.setName(rs.getString("name"));
             coach.setCountry(
-                    countryRepo.getById(rs.getString("country_id"))
+                    countryRepo.getById(rs.getString("nationality"))
             );
             coach.setClubId(rs.getString("club_id"));
 
