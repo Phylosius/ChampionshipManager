@@ -1,0 +1,51 @@
+### 1. Get all players (with optional filters & pagination)
+GET {{baseUrl}}/players?name=Fernandes&clubNameContaining=MUN&ageMinimum=25&ageMaximum=35&page=0&pageSize=10
+Accept: application/json
+
+### 2. Get all players (no filters)
+GET {{baseUrl}}/players
+Accept: application/json
+
+### 3. Create or update players
+PUT {{baseUrl}}/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "playerOne",
+    "name": "Test Player One",
+    "age": 22,
+    "nationality": "FR"
+  },
+  {
+    "id": "player2",
+    "name": "Test Player Two",
+    "age": 30,
+    "nationality": "FR"
+  }
+]
+
+### 4. Update existing player
+PUT {{baseUrl}}/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "7b8b134c-e087-4079-9cc3-3bff6e6244e6",
+    "name": "Kylian Mbappé (M)",
+    "age": 26,
+    "nationality": "FR",
+    "number": 2,
+    "position": "STRIKER"
+  }
+]
+
+### 5. Get statistics for a specific player (default durationUnit = SECOND)
+GET {{baseUrl}}/players/7b8b134c-e087-4079-9cc3-3bff6e6244e6/statistics/2025
+Accept: application/json
+
+### 6. Get statistics for a specific player (custom durationUnit)
+GET {{baseUrl}}/players/66666666-6666-6666-6666-666666666666/statistics/2025?durationUnit=MINUTE
+Accept: application/json
