@@ -8,7 +8,6 @@ import school.hei.championshipmanager.mappers.SeasonMapper;
 import school.hei.championshipmanager.model.Season;
 
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor
 @Repository

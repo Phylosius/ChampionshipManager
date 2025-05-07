@@ -123,7 +123,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     }
 
     public int deleteAllByClubId(String clubId) {
-        return baseRepo.delete("DELETE FROM player_role WHERE clubId = ?", clubId);
+        return baseRepo.delete("DELETE FROM player_role WHERE club_id = ?", clubId);
     }
 
     public Boolean isExists(ClubPlayer player) throws EntityNotFoundException {

@@ -13,16 +13,36 @@ Accept: application/json
 
 [
   {
-    "id": "playerOne",
-    "name": "Test Player One",
-    "age": 22,
-    "nationality": "FR"
+    "id": "gardien1",
+    "name": "Gardien 1",
+    "age": 30,
+    "number": 1,
+    "position": "GOAL_KEEPER",
+    "nationality": "ES"
   },
   {
-    "id": "player2",
-    "name": "Test Player Two",
-    "age": 30,
-    "nationality": "FR"
+    "id": "defense1",
+    "name": "Défense 1",
+    "age": 25,
+    "number": 2,
+    "position": "DEFENSE",
+    "nationality": "ES"
+  },
+  {
+    "id": "milieu1",
+    "name": "Milieu 1",
+    "age": 24,
+    "number": 5,
+    "position": "MIDFIELDER",
+    "nationality": "ES"
+  },
+  {
+    "id": "milieu1",
+    "name": "Milieu 1",
+    "age": 24,
+    "number": 5,
+    "position": "MIDFIELDER",
+    "nationality": "ES"
   }
 ]
 

@@ -1,14 +1,80 @@
-### Get All
 GET {{baseUrl}}/clubs
 Accept: application/json
 
-
-### Create or update
-PUT {{baseUrl}}/clubs
+### create club 1 players
+PUT {{baseUrl}}/clubs/club1/players
 Content-Type: application/json
 
 [
   {
+    "id": "gardien1",
+    "name": "Gardien 1",
+    "number": 1,
+    "age": 30,
+    "position": "GOAL_KEEPER",
+    "nationality": "ES"
+  },
+  {
+    "id": "defense1",
+    "name": "Défense 1",
+    "number": 2,
+    "age": 25,
+    "position": "DEFENSE",
+    "nationality": "ES"
+  },
+  {
+    "id": "milieu1",
+    "name": "Milieu 1",
+    "number": 5,
+    "age": 24,
+    "position": "MIDFIELDER",
+    "nationality": "ES"
+  },
+  {
+    "id": "attaquant1",
+    "name": "Attaquant 1",
+    "number": 7,
+    "age": 17,
+    "position": "STRIKER",
+    "nationality": "ES"
+  }
+]
 
+### create club 2 players
+PUT {{baseUrl}}/clubs/club2/players
+Content-Type: application/json
+
+[
+  {
+    "id": "gardien2",
+    "name": "Gardien 2",
+    "number": 1,
+    "age": 21,
+    "position": "GOAL_KEEPER",
+    "nationality": "ES"
+  },
+  {
+    "id": "defense2",
+    "name": "Défense 2",
+    "number": 2,
+    "age": 34,
+    "position": "DEFENSE",
+    "nationality": "BE"
+  },
+  {
+    "id": "milieu2",
+    "name": "Milieu 2",
+    "number": 5,
+    "age": 29,
+    "position": "MIDFIELDER",
+    "nationality": "FR"
+  },
+  {
+    "id": "attaquant2",
+    "name": "Attaquant 2",
+    "number": 7,
+    "age": 18,
+    "position": "STRIKER",
+    "nationality": "DE"
   }
 ]

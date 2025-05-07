@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./run-migration elp
+./run-migration epl
 ./run-migration laliga
 ./run-migration bundesliga
 ./run-migration ligue1

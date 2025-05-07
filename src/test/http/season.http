@@ -1,20 +1,32 @@
-### 0
+### GET SEASONS
 GET {{baseUrl}}/seasons
 Accept: application/json
 
-### 1
+### SEASON CREATION
 POST {{baseUrl}}/seasons
 Content-Type: application/json
 
 [
   {
-    "year": 2028,
-    "alias": "S2028-2029"
+    "year": 2024,
+    "alias": "S2024-2025"
+  },
+  {
+    "year": 2025,
+    "alias": "S2025-2026"
   }
 ]
 
-### 2
-PUT {{baseUrl}}/seasons/2028/status
+### STARTING SEASON
+###
+PUT {{baseUrl}}/seasons/2024/status
+Content-Type: application/json
+
+{
+  "status": "STARTED"
+}
+###
+PUT {{baseUrl}}/seasons/2025/status
 Content-Type: application/json
 
 {

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Usage: ./run.sh <CHAMPIONSHIP_NAME>
+# Possible values (case-insensitive): EPL, LALIGA, BUNDESLIGA, LIGUE1, SERIEA
+
+CHAMPIONSHIP_NAME=$(echo "$1" | tr '[:lower:]' '[:upper:]')
+
+case "$CHAMPIONSHIP_NAME" in
+  EPL)
+    PORT=3031
+    DB_NAME="championship_manager_epl"
+    ;;
+  LALIGA)
+    PORT=3032
+    DB_NAME="championship_manager_laliga"
+    ;;
+  BUNDESLIGA)
+    PORT=3033
+    DB_NAME="championship_manager_bundesliga"
+    ;;
+  LIGUE1)
+    PORT=3034
+    DB_NAME="championship_manager_ligue1"
+    ;;
+  SERIEA)
+    PORT=3035
+    DB_NAME="championship_manager_seriea"
+    ;;
+  *)
+    echo "Erreur : championnat inconnu. Utilise : EPL, LALIGA, BUNDESLIGA, LIGUE1, SERIEA"
+    exit 1
+    ;;
+esac
+
+./gradlew bootRun --args="--app.championship.id=$CHAMPIONSHIP_NAME --server.port=$PORT --spring.datasource.url=jdbc:postgresql://localhost:5432/$DB_NAME"

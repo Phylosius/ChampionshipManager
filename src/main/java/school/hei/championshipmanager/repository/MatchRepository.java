@@ -40,22 +40,22 @@ public class MatchRepository implements EntityRepo<Match, String> {
         List<Object> params = new ArrayList<>(List.of(seasonYear));
 
         if (matchStatus != null) {
-            sql.append(" AND match.status = ?");
-            params.add(matchStatus);
+            sql.append(" AND match.status = ?::public.\"EVENT_STATUS\"");
+            params.add(matchStatus.toString());
         }
 
         if (clubPlayingName != null) {
-            sql.append(" AND match.home_club_id ILIKE %?%");
+            sql.append(" AND match.home_club_id ILIKE '%' || ? || '%'");
             params.add(clubPlayingName);
         }
 
         if (matchAfter != null) {
-            sql.append(" AND match.home_time > ?");
+            sql.append(" AND match.date > ?");
             params.add(matchAfter);
         }
 
         if (matchBeforeOrEquals != null) {
-            sql.append(" AND match.home_time <= ?");
+            sql.append(" AND match.date <= ?");
             params.add(matchBeforeOrEquals);
         }
 
