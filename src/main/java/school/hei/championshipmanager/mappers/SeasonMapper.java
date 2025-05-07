@@ -17,12 +17,12 @@ public class SeasonMapper implements ModelRepositoryMapper<Season> {
 
     @Override
     public List<?> toCreationParams(Season season) {
-        return List.of(season.getId(), season.getYear(), season.getStatus());
+        return List.of(season.getId(), season.getYear(), season.getStatus().toString());
     }
 
     @Override
     public List<?> toUpdateParams(Season season) {
-        return List.of(season.getYear(), season.getStatus(), season.getId());
+        return List.of(season.getYear(), season.getStatus().toString(), season.getId());
     }
 
     @Override

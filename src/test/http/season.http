@@ -1,0 +1,9 @@
+POST {{baseUrl}}/seasons
+Content-Type: application/json
+
+[
+  {
+    "year": 2028,
+    "alias": "S2028-2029"
+  }
+]

@@ -1,6 +1,7 @@
 package school.hei.championshipmanager.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import school.hei.championshipmanager.dto.CreateSeasonRest;
 import school.hei.championshipmanager.dto.SeasonRest;
 import school.hei.championshipmanager.dto.UpdateSeasonRestStatus;
+import school.hei.championshipmanager.exeptions.EntityAlreadyExistException;
 import school.hei.championshipmanager.services.SeasonService;
 
 @AllArgsConstructor
@@ -50,7 +52,10 @@ public class SeasonRestController {
     {
         try {
             return ResponseEntity.ok(seasonService.createSeasons(seasons));
-        } catch (Exception e) {
+        } catch (EntityAlreadyExistException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+        catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }

@@ -8,6 +8,7 @@ import school.hei.championshipmanager.mappers.SeasonMapper;
 import school.hei.championshipmanager.model.Season;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Repository
@@ -40,7 +41,7 @@ public class SeasonRepo implements EntityRepo<Season, String> {
 
     @Override
     public int add(Season season) throws EntityAlreadyExistException {
-        if (exists(season.getId())) {
+        if (exists(season.getYear())) {
             throw new EntityAlreadyExistException("Season with id " + season.getId() + " already exists");
         }
 
@@ -66,7 +67,8 @@ public class SeasonRepo implements EntityRepo<Season, String> {
         return baseRepo.delete("DELETE FROM season WHERE id = ?", id);
     }
 
-    public boolean exists(String id) {
-        return baseRepo.isExists("SELECT COUNT(*) FROM season WHERE id = ?", id);
+    public boolean exists(Integer year) {
+        return !getAllBy("year = ?", List.of(year), null, null)
+                .isEmpty();
     }
 }
