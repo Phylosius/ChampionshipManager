@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Usage: ./script.sh <database_name>
+DB_NAME="$1"
+
+if [[ -z "$DB_NAME" ]]; then
+  echo "Error: No database name provided."
+  echo "Usage: $0 <database_name>"
+  exit 1
+fi
+
+psql -U postgres -d "$DB_NAME" -c "
+BEGIN;
+TRUNCATE TABLE
+    public.score,
+    public.player_stats,
+    public.match,
+    public.player_role,
+    public.coach,
+    public.player,
+    public.club,
+    public.season,
+    public.championship,
+    public.country
+  RESTART IDENTITY CASCADE;
+COMMIT;
+"
