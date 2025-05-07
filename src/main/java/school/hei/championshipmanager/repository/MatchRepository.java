@@ -93,7 +93,7 @@ public class MatchRepository implements EntityRepo<Match, String> {
 
     @Override
     public int update(Match clubPlayer) {
-        return baseRepo.add("""
+        return baseRepo.update("""
                 UPDATE
                 match
                 SET

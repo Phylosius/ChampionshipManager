@@ -1,3 +1,11 @@
+# 4. Change match status to STARTED
+PUT {{baseUrl}}/matches/09e7cf01-af86-4a71-b060-df60675ce6e1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
 ### MatchRestController Tests
 
 # 1. Get all matches for season 2025
@@ -12,14 +20,6 @@ Accept: application/json
 GET {{baseUrl}}/matches/2025?matchAfter=2025-08-01T00:00:00&matchBeforeOrEquals=2025-09-01T23:59:59
 Accept: application/json
 
-# 4. Change match status to STARTED
-PUT {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/status
-Content-Type: application/json
-Accept: application/json
-
-{
-  "status": "STARTED"
-}
 
 # 5. Change match status invalid transition
 PUT {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/status

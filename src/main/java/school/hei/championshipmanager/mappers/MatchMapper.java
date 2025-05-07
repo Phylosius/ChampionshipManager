@@ -24,14 +24,14 @@ public class MatchMapper implements ModelRepositoryMapper<Match> {
     public List<?> toCreationParams(Match match) {
         return List.of(match.getId(), match.getSeasonId(), match.getChampionshipId(),
                 match.getHomeClub().getId(), match.getAwayClub().getId(),
-                match.getDate(), match.getStatus());
+                match.getDate(), match.getStatus().toString());
     }
 
     @Override
     public List<?> toUpdateParams(Match match) {
         return List.of(match.getSeasonId(), match.getChampionshipId(),
                 match.getHomeClub().getId(), match.getAwayClub().getId(),
-                match.getDate(), match.getStatus(), match.getId());
+                match.getDate(), match.getStatus().toString(), match.getId());
     }
 
     @Override

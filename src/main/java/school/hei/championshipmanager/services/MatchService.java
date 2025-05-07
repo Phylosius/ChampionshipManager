@@ -55,7 +55,7 @@ public class MatchService {
     {
         Match match = matchRepository.getById(matchId);
 
-        if (match.getStatus().isAfter(match.getStatus())) {
+        if (!matchStatus.getStatus().isAfter(match.getStatus())) {
             return null;
         }
 

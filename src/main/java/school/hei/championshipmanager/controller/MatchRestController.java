@@ -58,8 +58,7 @@ public class MatchRestController {
 
             return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
-//            return ResponseEntity.status(500).body(e.getMessage());
-            throw new RuntimeException(e);
+            return ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
