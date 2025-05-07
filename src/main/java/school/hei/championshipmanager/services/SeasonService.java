@@ -35,7 +35,7 @@ public class SeasonService {
     public SeasonRest updateSeasonStatus(Integer seasonYear, EventStatus newStatus) {
         Season season = seasonRepo.getByYear(seasonYear);
 
-        if (!season.setStatus(newStatus)) {
+        if (season.getStatus() != null && season.getStatus().isAfter(newStatus)) {
             return null;
         }
 

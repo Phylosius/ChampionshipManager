@@ -34,7 +34,7 @@ public class PlayerMapper implements ModelRepositoryMapper<Player> {
             player.setName(rs.getString("name"));
             player.setAge(rs.getInt("age"));
             player.setCountry(
-                    countryRepo.getById(rs.getString("country_id"))
+                    countryRepo.getById(rs.getString("nationality"))
             );
 
             return player;

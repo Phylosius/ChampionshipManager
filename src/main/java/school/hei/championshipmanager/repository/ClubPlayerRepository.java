@@ -108,12 +108,12 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     @Override
     public int update(ClubPlayer clubPlayer) {
         playerRepo.save(clubPlayer);
-        return baseRepo.add("""
+        return baseRepo.update("""
                 UPDATE
                 player_role
                 SET
                 club_id = ?, player_id = ?, player_number = ?, player_position = ?, is_active = ?
-                WHERE club_id = ? AND player_id = ?
+                WHERE player_id = ? AND club_id = ?
                 """, clubPlayer, mapper);
     }
 

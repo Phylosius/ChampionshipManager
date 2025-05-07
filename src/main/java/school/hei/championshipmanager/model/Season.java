@@ -16,12 +16,4 @@ public class Season {
     public String getAlias() {
         return String.format("S%s-%s", year, year + 1);
     }
-
-    public boolean setStatus(EventStatus status) {
-        if (status.isAfter(this.status)) {
-            this.status = status;
-            return true;
-        }
-        return false;
-    }
 }

@@ -1,0 +1,50 @@
+### MatchRestController Tests
+
+# 1. Get all matches for season 2025
+GET {{baseUrl}}/matches/2025
+Accept: application/json
+
+# 2. Get all STARTED matches for season 2025 and club name filter
+GET {{baseUrl}}/matches/2025?matchStatus=STARTED&clubPlayingName=MUN
+Accept: application/json
+
+# 3. Get matches between dates
+GET {{baseUrl}}/matches/2025?matchAfter=2025-08-01T00:00:00&matchBeforeOrEquals=2025-09-01T23:59:59
+Accept: application/json
+
+# 4. Change match status to STARTED
+PUT {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+# 5. Change match status invalid transition
+PUT {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "FINISHED"
+}
+
+# 6. Add goals to a STARTED match
+POST {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/goals
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "playerId": "66666666-6666-6666-6666-666666666666", "minute": 10, "ownGoal": false },
+  { "playerId": "77777777-7777-7777-7777-777777777777", "minute": 45, "ownGoal": true }
+]
+
+# 7. Add goals to a NOT_STARTED match (should fail)
+POST localhost:8080/matches/cccccccc-cccc-cccc-cccc-cccccccccccc/goals
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "playerId": "66666666-6666-6666-6666-666666666666", "minute": 5, "ownGoal": false }
+]

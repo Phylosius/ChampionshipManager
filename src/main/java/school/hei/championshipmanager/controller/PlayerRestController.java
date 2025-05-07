@@ -66,7 +66,7 @@ public class PlayerRestController {
         try {
             return ResponseEntity.status(201).body(clubPlayerService.createOrUpdatePlayers(players));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body("Don't work");
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayerRestController {
 
             return ResponseEntity.ok(retrieved);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body("Don't work");
         }
     }
 

@@ -12,6 +12,7 @@ import school.hei.championshipmanager.repository.CountryRepo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Component
@@ -63,6 +64,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
     public ClubPlayer toModel(PlayerRest dto) {
         ClubPlayer player = new ClubPlayer();
 
+        player.setRoleId(UUID.randomUUID().toString());
         player.setId(dto.getId());
         player.setName(dto.getName());
         player.setAge(dto.getAge());
@@ -70,7 +72,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
         player.setPosition(dto.getPosition());
         player.setActive(false);
         player.setCountry(
-                countryRepo.getByName(dto.getNationality())
+                countryRepo.getById(dto.getNationality())
         );
 
         return player;
