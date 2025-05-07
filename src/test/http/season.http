@@ -1,3 +1,8 @@
+### 0
+GET {{baseUrl}}/seasons
+Accept: application/json
+
+### 1
 POST {{baseUrl}}/seasons
 Content-Type: application/json
 
@@ -7,3 +12,11 @@ Content-Type: application/json
     "alias": "S2028-2029"
   }
 ]
+
+### 2
+PUT {{baseUrl}}/seasons/2028/status
+Content-Type: application/json
+
+{
+  "status": "STARTED"
+}

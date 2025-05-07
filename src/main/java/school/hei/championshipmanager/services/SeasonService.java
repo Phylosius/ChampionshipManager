@@ -35,10 +35,11 @@ public class SeasonService {
     public SeasonRest updateSeasonStatus(Integer seasonYear, EventStatus newStatus) {
         Season season = seasonRepo.getByYear(seasonYear);
 
-        if (season.getStatus() != null && season.getStatus().isAfter(newStatus)) {
+        if (season.getStatus() != null && !newStatus.isAfter(season.getStatus())) {
             return null;
         }
 
+        season.setStatus(newStatus);
         seasonRepo.update(season);
 
         return seasonMapper.toDTO(season);

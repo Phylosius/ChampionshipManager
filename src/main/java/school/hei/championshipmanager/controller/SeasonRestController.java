@@ -70,16 +70,18 @@ public class SeasonRestController {
     @PutMapping("/{seasonYear}/status")
     public ResponseEntity<?> updateSeasonStatus(
             @PathVariable Integer seasonYear,
-            @RequestParam UpdateSeasonRestStatus updateStatus
+            @RequestBody UpdateSeasonRestStatus updateStatus
             ) {
         try {
             SeasonRest retrieved = seasonService.updateSeasonStatus(seasonYear, updateStatus.getStatus());
 
             if (retrieved == null) {
-                return ResponseEntity.status(404).body("Season not found");
+                return ResponseEntity.status(400).body("Bad update order");
             }
 
             return ResponseEntity.ok(retrieved);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
