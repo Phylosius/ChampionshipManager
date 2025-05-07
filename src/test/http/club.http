@@ -1,0 +1,14 @@
+### Get All
+GET {{baseUrl}}/clubs
+Accept: application/json
+
+
+### Create or update
+PUT {{baseUrl}}/clubs
+Content-Type: application/json
+
+[
+  {
+
+  }
+]

@@ -1,0 +1,141 @@
+#####Players Endpoints
+
+###1. Get list of players (with filters)
+GET {{baseUrl}}/players?name=Bruno&ageMinimum=20&ageMaximum=30&clubName=MUN
+Accept: application/json
+
+###2. Get list of all players (no filters)
+GET {{baseUrl}}/players
+Accept: application/json
+
+###3. Create or update players
+PUT {{baseUrl}}/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": null,
+    "name": "Alice Example",
+    "age": 24,
+    "nationality": "FR",
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": null,
+    "name": "Bob Sample",
+    "age": 28,
+    "nationality": "PT",
+    "position": "STRIKER"
+  }
+]
+
+#####Seasons Endpoints
+
+### 4. Get list of seasons
+GET {{baseUrl}}/seasons
+Accept: application/json
+
+### 5. Create new seasons
+POST {{baseUrl}}/seasons
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "year": 2026, "alias": "S2026-2027" },
+  { "year": 2027, "alias": "S2027-2028" }
+]
+
+### 6. Update season status
+PUT {{baseUrl}}/seasons/2025/status
+Content-Type: application/json
+Accept: application/json
+
+{ "status": "STARTED" }
+
+##### Player Statistics Endpoint
+
+### 7. Get statistics for a specific player
+GET {{baseUrl}}/players/66666666-6666-6666-6666-666666666666/statistics/2025
+Accept: application/json
+
+#####Clubs Endpoints
+
+### 8. Get all clubs
+GET {{baseUrl}}/clubs
+Accept: application/json
+
+### 9. Create or update clubs
+PUT {{baseUrl}}/clubs
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": null,
+    "name": "Test Club",
+    "acronym": "TST",
+    "yearCreation": 2000,
+    "stadium": "Test Arena",
+    "coach": { "name": "Coach Test", "nationality": "ES" }
+  }
+]
+
+#####Club Players Endpoints
+
+###10. Get players of a club
+GET {{baseUrl}}/clubs/33333333-3333-3333-3333-333333333333/players
+Accept: application/json
+
+###11. Replace players of a club
+PUT {{baseUrl}}/clubs/33333333-3333-3333-3333-333333333333/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "id": "66666666-6666-6666-6666-666666666666", "name": "Updated Player", "age": 27, "nationality": "BE", "position": "DEFENSE" }
+]
+
+###12. Add players to a club
+POST {{baseUrl}}/clubs/33333333-3333-3333-3333-333333333333/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "id": null, "name": "New Clubbie", "age": 21, "nationality": "IT", "position": "GOAL_KEEPER" }
+]
+
+#####MatchMaker Endpoint
+
+###13. Generate all matches for a season
+POST {{baseUrl}}/matchMaker/2025
+Accept: application/json
+
+#####Matches Endpoints
+
+###14. Get matches by season (filters)
+GET {{baseUrl}}/matches/2025?matchStatus=STARTED&clubPlayingName=MUN&matchAfter=2025-08-01&matchBeforeOrEquals=2025-09-01
+Accept: application/json
+
+###15. Change match status
+PUT {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/status
+Content-Type: application/json
+Accept: application/json
+
+{ "status": "FINISHED" }
+
+###16. Add goals to a match
+POST {{baseUrl}}/matches/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/goals
+Content-Type: application/json
+Accept: application/json
+
+[
+  { "clubId": "33333333-3333-3333-3333-333333333333", "scorerIdentifier": "66666666-6666-6666-6666-666666666666", "minuteOfGoal": 55 },
+  { "clubId": "44444444-4444-4444-4444-444444444444", "scorerIdentifier": "77777777-7777-7777-7777-777777777777", "minuteOfGoal": 78 }
+]
+
+#####Club Statistics Endpoint
+
+###17. Get club statistics for a season
+GET {{baseUrl}}/clubs/statistics/2025?hasToBeClassified=true
+Accept: application/json
