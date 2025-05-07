@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.championshipmanager.services.MatchService;
 
+import java.util.NoSuchElementException;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/matchMaker")
@@ -27,8 +29,12 @@ public class MatchMakerController {
     ) {
         try {
             return ResponseEntity.ok(matchService.make(seasonYear));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+        catch (Exception e) {
+//            return ResponseEntity.status(500).body(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

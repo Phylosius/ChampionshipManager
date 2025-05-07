@@ -110,6 +110,7 @@ public class MatchService {
             });
         });
 
+        madeMatches.forEach(matchRepository::add);
         return madeMatches.stream().map(matchMapper::toDTO).toList();
     }
 }
