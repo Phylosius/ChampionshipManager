@@ -8,7 +8,6 @@ import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.MatchMapper;
 import school.hei.championshipmanager.model.Match;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,18 +80,23 @@ public class MatchRepository implements EntityRepo<Match, String> {
     }
 
     @Override
-    public int add(Match clubPlayer) throws EntityAlreadyExistException {
+    public int add(Match match) throws EntityAlreadyExistException {
+
+        if (exists(match)) {
+            throw new EntityAlreadyExistException("Match already created");
+        }
+
         return baseRepo.add("""
                 INSERT INTO
                 match
                 (id, season_id, championship_id, home_club_id, away_club_id, date, status)
                 VALUES
                 (?, ?, ?, ?, ?, ?, ?::public."EVENT_STATUS")
-                """, clubPlayer, mapper);
+                """, match, mapper);
     }
 
     @Override
-    public int update(Match clubPlayer) {
+    public int update(Match match) {
         return baseRepo.update("""
                 UPDATE
                 match
@@ -100,11 +104,17 @@ public class MatchRepository implements EntityRepo<Match, String> {
                 season_id = ?, championship_id = ?, home_club_id = ?, away_club_id = ?,
                  date = ?, status = ?::public."EVENT_STATUS"
                 WHERE id = ?
-                """, clubPlayer, mapper);
+                """, match, mapper);
     }
 
     @Override
     public int delete(String id) throws EntityNotFoundException {
         return baseRepo.delete("DELETE FROM match WHERE id = ?", id);
+    }
+
+    public boolean exists(Match match) {
+        return !getAllBy("match.season_id = ? AND match.away_club_id = ? AND match.home_club_id = ?",
+                List.of(match.getSeasonId(), match.getAwayClub().getId(), match.getHomeClub().getId()),
+                null, null).isEmpty();
     }
 }
