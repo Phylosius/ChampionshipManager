@@ -45,8 +45,8 @@ public class MatchRepository implements EntityRepo<Match, String> {
         }
 
         if (clubPlayingName != null) {
-            sql.append(" AND match.home_club_id ILIKE '%' || ? || '%'");
-            params.add(clubPlayingName);
+            sql.append(" AND (match.home_club_id ILIKE '%' || ? || '%' OR match.away_club_id ILIKE '%' || ? || '%')");
+            params.addAll(List.of(clubPlayingName, clubPlayingName));
         }
 
         if (matchAfter != null) {

@@ -74,6 +74,6 @@ public class ClubRepo implements EntityRepo<Club, String> {
     }
 
     public Boolean exists(Club club) {
-        return baseRepo.isExists("SELECT COUNT(*) FROM club WHERE id = ?", club.getId());
+        return baseRepo.isExists("SELECT id FROM club WHERE id = ?", club.getId());
     }
 }

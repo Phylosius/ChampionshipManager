@@ -73,6 +73,6 @@ public class PlayerRepo implements EntityRepo<Player, String> {
     }
 
     public boolean exists(String id) {
-        return baseRepo.isExists("SELECT COUNT(*) FROM player WHERE id = ?", id);
+        return baseRepo.isExists("SELECT id FROM player WHERE id = ?", id);
     }
 }

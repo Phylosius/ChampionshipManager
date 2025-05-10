@@ -34,7 +34,7 @@ public class SeasonMapper implements ModelRepositoryMapper<Season> {
             season.setYear(rs.getInt("year"));
             season.setStatus(EventStatus.valueOf(rs.getString("status")));
 
-            System.out.println(season);
+            //System.out.println(season);
 
             return season;
         } catch (SQLException e) {

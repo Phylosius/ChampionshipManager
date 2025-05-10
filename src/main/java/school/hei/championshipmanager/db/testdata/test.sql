@@ -8,7 +8,7 @@ VALUES ('C1', 'Club 1', 1902, 'C1', 'Stade 1', 'EPL'),
 INSERT INTO coach (id, name, nationality, club_id)
 VALUES ('entraineur1', 'Entraîneur 1', 'FR', 'C1'),
        ('entraineur2', 'Entraîneur 2', 'IT', 'C2'),
-       ('entraineur3', 'Entraîneur 2', 'DE', 'C3');
+       ('entraineur3', 'Entraîneur 3', 'DE', 'C3');
 
 --- Players
 INSERT INTO player (id, name, age, nationality)
@@ -54,19 +54,19 @@ INSERT INTO match (id, home_club_id, away_club_id, date, status, season_id, cham
 VALUES
        --- 2024
        ('S2024-2025-EPL-C1vsC2', 'C1', 'C2', '2024-08-01 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
-       ('S2024-2025-EPL-C2vsC3', 'C2', 'C3', '2024-08-08 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
-       ('S2024-2025-EPL-C1vsC3', 'C1', 'C3', '2024-08-15 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
-       ('S2024-2025-EPL-C3vsC2', 'C3', 'C2', '2024-08-22 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
-       ('S2024-2025-EPL-C2vsC1', 'C2', 'C1', '2024-08-29 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
-       ('S2024-2025-EPL-C3vsC1', 'C3', 'C1', '2024-09-05 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
+       ('S2024-2025-EPL-C2vsC3', 'C2', 'C3', '2024-08-02 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
+       ('S2024-2025-EPL-C1vsC3', 'C1', 'C3', '2024-08-03 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
+       ('S2024-2025-EPL-C3vsC2', 'C3', 'C2', '2024-08-04 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
+       ('S2024-2025-EPL-C2vsC1', 'C2', 'C1', '2024-08-05 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
+       ('S2024-2025-EPL-C3vsC1', 'C3', 'C1', '2024-08-06 18:00:00', 'NOT_STARTED', 'S2024-2025', 'EPL'),
 
        --- 2025
        ('S2025-2026-EPL-C1vsC2', 'C1', 'C2', '2025-08-01 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
-       ('S2025-2026-EPL-C2vsC3', 'C2', 'C3', '2025-08-08 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
-       ('S2025-2026-EPL-C1vsC3', 'C1', 'C3', '2025-08-15 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
-       ('S2025-2026-EPL-C3vsC2', 'C3', 'C2', '2025-08-22 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
-       ('S2025-2026-EPL-C2vsC1', 'C2', 'C1', '2025-08-29 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
-       ('S2025-2026-EPL-C3vsC1', 'C3', 'C1', '2025-09-05 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL');
+       ('S2025-2026-EPL-C2vsC3', 'C2', 'C3', '2025-08-02 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
+       ('S2025-2026-EPL-C1vsC3', 'C1', 'C3', '2025-08-03 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
+       ('S2025-2026-EPL-C3vsC2', 'C3', 'C2', '2025-08-04 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
+       ('S2025-2026-EPL-C2vsC1', 'C2', 'C1', '2025-08-05 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL'),
+       ('S2025-2026-EPL-C3vsC1', 'C3', 'C1', '2025-08-06 18:00:00', 'NOT_STARTED', 'S2025-2026', 'EPL');
 
 --- Scores
 INSERT INTO score (match_id, player_id, minute_of_goal, own_goal)

@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @AllArgsConstructor
 @Component
@@ -52,23 +54,35 @@ public class PlayerStatsMapper implements ModelRepositoryMapper<PlayerStats> {
         }
     }
 
-    public PlayerStatisticsRest toDTO(PlayerStats stats, DurationUnit durationUnit) {
+    public PlayerStatisticsRest toDTO(List<PlayerStats> stats, DurationUnit durationUnit) {
         PlayerStatisticsRest dto = new PlayerStatisticsRest();
 
         PlayingTimeRest playingTimeRest = new PlayingTimeRest();
-        playingTimeRest.setValue(switch (durationUnit){
-            case SECOND -> stats.getPlayingTime().toSeconds();
-            case MINUTE -> stats.getPlayingTime().toMinutes();
-            case HOUR -> stats.getPlayingTime().toHours();
-        });
-        playingTimeRest.setDurationUnit(durationUnit);
 
-        List<ScorerRest> scores = stats.getScores(playerScoreRepo).stream()
-                .filter(s -> !s.getOwnGoal())
-                .map(playerScoreMapper::toDTO).toList();
+        AtomicInteger scoredGoals = new AtomicInteger(0);
+        AtomicLong playingTimeValue = new AtomicLong(0);
+
+        stats.forEach(stat -> {
+            playingTimeValue.set(playingTimeValue.get() + switch (durationUnit) {
+                case SECOND -> stat.getPlayingTime().toSeconds();
+                case MINUTE -> stat.getPlayingTime().toMinutes();
+                case HOUR -> stat.getPlayingTime().toHours();
+            });
+
+            List<ScorerRest> scores = stat.getScores(playerScoreRepo).stream()
+                    .filter(s -> !s.getOwnGoal())
+                    .map(playerScoreMapper::toDTO).toList();
+            scoredGoals.set(
+                    scoredGoals.get() + scores.size()
+            );
+        });
+
+        playingTimeRest.setDurationUnit(durationUnit);
+        playingTimeRest.setValue(playingTimeValue.get());
 
         dto.setPlayingTime(playingTimeRest);
-        dto.setScoredGoals(scores.size());
+
+        dto.setScoredGoals(scoredGoals.get());
 
         return dto;
     }

@@ -37,26 +37,26 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
         List<Object> sqlParams = null;
 
         if (nameContaining != null || clubNameContaining != null || ageMin != null || ageMax != null || page != null || pageSize != null) {
-            conditionSql = new StringBuilder();
+            conditionSql = new StringBuilder("1=1");
             sqlParams = new ArrayList<>();
 
             if (nameContaining != null) {
-                conditionSql.append("p.name ILIKE '%' || ? || '%'");
+                conditionSql.append(" AND p.name ILIKE '%' || ? || '%'");
                 sqlParams.add(nameContaining);
             }
 
             if (clubNameContaining != null) {
-                conditionSql.append("club.name ILIKE '%' || ? || '%'");
+                conditionSql.append(" AND club.name ILIKE '%' || ? || '%'");
                 sqlParams.add(clubNameContaining);
             }
 
             if (ageMin != null) {
-                conditionSql.append("p.age >= ?");
+                conditionSql.append(" AND p.age >= ?");
                 sqlParams.add(ageMin);
             }
 
             if (ageMax != null) {
-                conditionSql.append("p.age <= ?");
+                conditionSql.append(" AND p.age <= ?");
                 sqlParams.add(ageMax);
             }
         }
@@ -126,6 +126,6 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
     }
 
     public Boolean isExists(ClubPlayer player) throws EntityNotFoundException {
-        return baseRepo.isExists("SELECT COUNT(*) FROM player_role WHERE player_id = ?", player.getId());
+        return baseRepo.isExists("SELECT id FROM player_role WHERE player_id = ?", player.getId());
     }
 }

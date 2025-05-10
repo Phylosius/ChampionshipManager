@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import school.hei.championshipmanager.dto.PlayerRest;
 import school.hei.championshipmanager.dto.PlayerStatisticsRest;
 import school.hei.championshipmanager.enums.DurationUnit;
+import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.services.ClubPlayerService;
 import school.hei.championshipmanager.services.PlayerStatsService;
 
@@ -89,12 +90,11 @@ public class PlayerRestController {
         try {
             PlayerStatisticsRest retrieved = playerStatsService.getStatisticsOfPlayerById(id, seasonYear, durationUnit);
 
-            if (retrieved == null) {
-                return ResponseEntity.status(404).body(String.format("Season with year %s not found", seasonYear));
-            }
-
             return ResponseEntity.ok(retrieved);
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+        catch (Exception e) {
             return ResponseEntity.status(500).body("Don't work");
         }
     }

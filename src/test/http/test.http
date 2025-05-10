@@ -1,9 +1,14 @@
-### GET /players ❌
+### GET /players ✅
+### with filter
 GET {{baseUrl}}/players?
     name=attaquant&
     ageMinimum=20&
     ageMaximum=30&
     clubName=Club
+Accept: application/json
+
+### all
+GET {{baseUrl}}/players
 Accept: application/json
 
 ### PUT /players ❌
@@ -150,8 +155,8 @@ Accept: application/json
   "status": "STARTED"
 }
 
-### GET /players/{id}/statistics/{seasonYear} ❌
-GET {{baseUrl}}/players/attaquant1/statistics/2024
+### GET /players/{id}/statistics/{seasonYear} ✅
+GET {{baseUrl}}/players/attaquantA1/statistics/2024
 Accept: application/json
 
 ### GET /clubs ✅
@@ -351,18 +356,20 @@ Accept: application/json
 POST {{baseUrl}}//matchMaker/2025
 Accept: application/json
 
-### GET /matches/{seasonYear} ❌
+### GET /matches/{seasonYear} ✅
 #### 2024
-GET {{baseUrl}}/matches/2024
+GET {{baseUrl}}/matches/2024?
+    matchAfter=2024-08-02T17:00:00&
+    matchBeforeOrEquals=2024-08-05T18:00:00
 Accept: application/json
 
 #### 2025
 GET {{baseUrl}}/matches/2025?
-    matchStatus=STARTED&
+    matchStatus=NOT_STARTED&
     clubPlayingName=1
 Accept: application/json
 
-### PUT /matches/{id}/status ❌
+### PUT /matches/{id}/status ✅
 ### 2024
 ### 1
 PUT {{baseUrl}}/matches/S2024-2025-EPL-C1vsC2/status
@@ -478,7 +485,13 @@ POST {{baseUrl}}/matches/S2025-2026-EPL-C3vsC1/goals
 Content-Type: application/json
 Accept: application/json
 
-[]
+[
+  {
+    "scorerIdentifier": "attaquant1",
+    "clubId": "S2025-2026-EPL-C3vsC1",
+    "minuteOfGoal": 0
+  }
+]
 
 ### GET /clubs/statistics/{seasonYear} ❌
 ### 2024

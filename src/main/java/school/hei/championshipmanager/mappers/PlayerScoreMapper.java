@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.championshipmanager.dto.AddGoalRest;
 import school.hei.championshipmanager.dto.ScorerRest;
+import school.hei.championshipmanager.model.ClubPlayer;
 import school.hei.championshipmanager.model.Player;
 import school.hei.championshipmanager.model.PlayerScore;
 import school.hei.championshipmanager.repository.ClubPlayerRepository;
@@ -55,11 +56,12 @@ public class PlayerScoreMapper implements ModelRepositoryMapper<PlayerScore> {
 
     public PlayerScore toModel(String matchId, String playerId, AddGoalRest addGoal) {
         PlayerScore score = new PlayerScore();
+        ClubPlayer player = clubPlayerRepository.getById(playerId);
 
         score.setPlayerId(playerId);
         score.setMatchId(matchId);
         score.setId(UUID.randomUUID().toString());
-        score.setOwnGoal(true);
+        score.setOwnGoal(player.getClubId().equals(addGoal.getClubId()));
         score.setMinuteOfGoal(Duration.ofMinutes(addGoal.getMinuteOfGoal()));
 
         return score;

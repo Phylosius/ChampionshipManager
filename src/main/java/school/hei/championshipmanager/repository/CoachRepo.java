@@ -67,6 +67,6 @@ public class CoachRepo implements EntityRepo<Coach, String> {
     }
 
     public boolean exists(String id) {
-        return baseRepo.isExists("SELECT COUNT(*) FROM coach WHERE id = ?", id);
+        return baseRepo.isExists("SELECT id FROM coach WHERE id = ?", id);
     }
 }

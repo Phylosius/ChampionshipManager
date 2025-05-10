@@ -82,6 +82,6 @@ public class ChampionshipRepo implements EntityRepo<Championship, String> {
     }
 
     public boolean exists(String id) {
-        return baseRepo.isExists("SELECT COUNT(*) FROM championship WHERE id = ?", id);
+        return baseRepo.isExists("SELECT id FROM championship WHERE id = ?", id);
     }
 }
