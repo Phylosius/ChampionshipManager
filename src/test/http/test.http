@@ -1,0 +1,490 @@
+### GET /players ❌
+GET {{baseUrl}}/players?
+    name=attaquant&
+    ageMinimum=20&
+    ageMaximum=30&
+    clubName=Club
+Accept: application/json
+
+### PUT /players ❌
+PUT {{baseUrl}}/players
+Content-Type: application/json
+
+[
+  {
+    "id": "gardien1",
+    "name": "Gardien 1",
+    "age": 30,
+    "nationality": "ES",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense1",
+    "name": "Défense 1",
+    "age": 25,
+    "nationality": "ES",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu1",
+    "name": "Milieu 1",
+    "age": 24,
+    "nationality": "ES",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant1",
+    "name": "Attaquant 1",
+    "age": 17,
+    "nationality": "ES",
+    "number": 7,
+    "position": "STRIKER"
+  },
+
+  {
+    "id": "gardien2",
+    "name": "Gardien 2",
+    "age": 21,
+    "nationality": "ES",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense2",
+    "name": "Défense 2",
+    "age": 34,
+    "nationality": "BE",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu2",
+    "name": "Milieu 2",
+    "age": 29,
+    "nationality": "FR",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant2",
+    "name": "Attaquant 2",
+    "age": 18,
+    "nationality": "DE",
+    "number": 7,
+    "position": "STRIKER"
+  },
+
+  {
+    "id": "gardien3",
+    "name": "Gardien 3",
+    "age": 28,
+    "nationality": "BR",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense3",
+    "name": "Défense 3",
+    "age": 21,
+    "nationality": "BR",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu3",
+    "name": "Milieu 3",
+    "age": 29,
+    "nationality": "FR",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant3",
+    "name": "Attaquant 3",
+    "age": 23,
+    "nationality": "DE",
+    "number": 7,
+    "position": "STRIKER"
+  }
+]
+
+### GET /seasons ✅
+GET {{baseUrl}}/seasons
+Accept: application/json
+
+### POST /seasons ✅
+POST {{baseUrl}}/seasons
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "year": 2024,
+    "alias": "S2024-2025"
+  },
+  {
+    "year": 2025,
+    "alias": "S2025-2026"
+  }
+]
+
+### PUT /seasons/{seasonYear}/status ✅
+### 2024
+PUT {{baseUrl}}/seasons/2024/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 2025
+PUT {{baseUrl}}/seasons/2025/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### GET /players/{id}/statistics/{seasonYear} ❌
+GET {{baseUrl}}/players/attaquant1/statistics/2024
+Accept: application/json
+
+### GET /clubs ✅
+GET {{baseUrl}}/clubs
+Accept: application/json
+
+### PUT /clubs ❌
+PUT {{baseUrl}}/clubs
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "C1",
+    "name": "Club 1",
+    "yearCreation": 1902,
+    "stadium": "Stade 1",
+    "acronym": "C1",
+    "coach": {
+      "name": "Entraineur 1",
+      "nationality": "FR"
+    }
+  },
+  {
+    "id": "C2",
+    "name": "Club 2",
+    "yearCreation": 1905,
+    "stadium": "Stade 2",
+    "acronym": "C2",
+    "coach": {
+      "name": "Entraineur 2",
+      "nationality": "FR"
+    }
+  },
+  {
+    "id": "C3",
+    "name": "Club 3",
+    "yearCreation": 1910,
+    "stadium": "Stade 3",
+    "acronym": "C3",
+    "coach": {
+      "name": "Entraineur 3",
+      "nationality": "FR"
+    }
+  }
+]
+
+### GET /clubs/{id}/players ✅
+GET {{baseUrl}}/clubs/C3/players
+Accept: application/json
+
+### PUT /clubs/{id}/players ✅
+
+#### C1
+PUT {{baseUrl}}/clubs/C1/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "gardien1",
+    "name": "Gardien 1",
+    "age": 30,
+    "nationality": "ES",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense1",
+    "name": "Défense 1",
+    "age": 25,
+    "nationality": "ES",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu1",
+    "name": "Milieu 1",
+    "age": 24,
+    "nationality": "ES",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant1",
+    "name": "Attaquant 1",
+    "age": 17,
+    "nationality": "ES",
+    "number": 7,
+    "position": "STRIKER"
+  }
+]
+
+#### C2
+PUT {{baseUrl}}/clubs/C2/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "gardien2",
+    "name": "Gardien 2",
+    "age": 21,
+    "nationality": "ES",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense2",
+    "name": "Défense 2",
+    "age": 34,
+    "nationality": "BE",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu2",
+    "name": "Milieu 2",
+    "age": 29,
+    "nationality": "FR",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant2",
+    "name": "Attaquant 2",
+    "age": 18,
+    "nationality": "DE",
+    "number": 7,
+    "position": "STRIKER"
+  }
+]
+
+#### C3
+PUT {{baseUrl}}/clubs/C3/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "gardien3",
+    "name": "Gardien 3",
+    "age": 28,
+    "nationality": "BR",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  },
+  {
+    "id": "defense3",
+    "name": "Défense 3",
+    "age": 21,
+    "nationality": "BR",
+    "number": 2,
+    "position": "DEFENSE"
+  },
+  {
+    "id": "milieu3",
+    "name": "Milieu 3",
+    "age": 29,
+    "nationality": "FR",
+    "number": 5,
+    "position": "MIDFIELDER"
+  },
+  {
+    "id": "attaquant3",
+    "name": "Attaquant 3",
+    "age": 23,
+    "nationality": "DE",
+    "number": 7,
+    "position": "STRIKER"
+  }
+]
+
+### POST /clubs/{id}/players ❌
+#### C3
+POST {{baseUrl}}/clubs/C3/players
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "id": "gardien3",
+    "name": "Gardien 3",
+    "age": 28,
+    "nationality": "BR",
+    "number": 1,
+    "position": "GOAL_KEEPER"
+  }
+]
+
+### POST /matchMaker/{seasonYear} ❌
+#### 2024
+POST {{baseUrl}}//matchMaker/2024
+Accept: application/json
+
+#### 2025
+POST {{baseUrl}}//matchMaker/2025
+Accept: application/json
+
+### GET /matches/{seasonYear} ❌
+#### 2024
+GET {{baseUrl}}/matches/2024
+Accept: application/json
+
+#### 2025
+GET {{baseUrl}}/matches/2025?
+    matchStatus=STARTED&
+    clubPlayingName=1
+Accept: application/json
+
+### PUT /matches/{id}/status ❌
+### 2024
+### 1
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C1vsC2/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 2
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C2vsC3/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 3
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C1vsC3/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 4
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C3vsC2/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 5
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C2vsC1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 6
+PUT {{baseUrl}}/matches/S2024-2025-EPL-C3vsC1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 2025
+### 1
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C1vsC2/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 2
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C2vsC3/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 3
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C1vsC3/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 4
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C3vsC2/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 5
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C2vsC1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### 6
+PUT {{baseUrl}}/matches/S2025-2026-EPL-C3vsC1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "STARTED"
+}
+
+### POST /matches/{id}/goals ❌
+POST {{baseUrl}}/matches/S2025-2026-EPL-C3vsC1/goals
+Content-Type: application/json
+Accept: application/json
+
+[]
+
+### GET /clubs/statistics/{seasonYear} ❌
+### 2024
+GET {{baseUrl}}/clubs/statistics/2024
+Accept: application/json
+
+### 2025
+GET {{baseUrl}}/clubs/statistics/2025
+Accept: application/json
