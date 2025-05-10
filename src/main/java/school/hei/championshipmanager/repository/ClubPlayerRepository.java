@@ -46,7 +46,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
             }
 
             if (clubNameContaining != null) {
-                conditionSql.append("c.name ILIKE '%' || ? || '%'");
+                conditionSql.append("club.name ILIKE '%' || ? || '%'");
                 sqlParams.add(clubNameContaining);
             }
 
@@ -80,8 +80,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 FROM player_role r
                 JOIN player p
                     ON p.id = r.player_id
-                JOIN club c
-                    ON c.id = r.club_id
+                JOIN club ON club.id = r.club_id
                 """, conditionSql, sqlParams, page, pageSize, mapper);
     }
 
@@ -101,7 +100,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 player_role
                 (id, club_id, player_id, player_number, player_position, is_active)
                 VALUES
-                (?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?::"PLAYER_POSITION", ?)
                 """, clubPlayer, mapper);
     }
 
@@ -112,7 +111,7 @@ public class ClubPlayerRepository implements EntityRepo<ClubPlayer, String> {
                 UPDATE
                 player_role
                 SET
-                club_id = ?, player_id = ?, player_number = ?, player_position = ?, is_active = ?
+                club_id = ?, player_id = ?, player_number = ?, player_position = ?::"PLAYER_POSITION", is_active = ?
                 WHERE player_id = ? AND club_id = ?
                 """, clubPlayer, mapper);
     }

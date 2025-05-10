@@ -24,7 +24,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
     public List<?> toCreationParams(ClubPlayer clubPlayer) {
         return List.of(clubPlayer.getRoleId(),
                 clubPlayer.getClubId(), clubPlayer.getId(),
-                clubPlayer.getNumber(), clubPlayer.getPosition(),
+                clubPlayer.getNumber(), clubPlayer.getPosition().toString(),
                 clubPlayer.getActive());
     }
 
@@ -32,7 +32,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
     public List<?> toUpdateParams(ClubPlayer clubPlayer) {
         return List.of(
                 clubPlayer.getClubId(), clubPlayer.getId(),
-                clubPlayer.getNumber(), clubPlayer.getPosition(),
+                clubPlayer.getNumber(), clubPlayer.getPosition().toString(),
                 clubPlayer.getActive(), clubPlayer.getId(), clubPlayer.getClubId());
     }
 

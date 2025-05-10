@@ -48,7 +48,8 @@ INSERT INTO country (id, name, continent) VALUES
   ('TR', 'Turkey', 'EUROPE'),
   ('UA', 'Ukraine', 'EUROPE'),
   ('GB', 'United Kingdom', 'EUROPE'),
-  ('VA', 'Vatican City', 'EUROPE');
+  ('VA', 'Vatican City', 'EUROPE'),
+  ('BR', 'Brazil', 'SOUTH_AMERICA');
 
 
 INSERT INTO public.championship (id, name, country_id) VALUES

@@ -45,11 +45,12 @@ public class PlayerRestController {
             @RequestParam(required = false) Integer pageSize
     ) {
         try {
-            return ResponseEntity.ok(
+            return ResponseEntity.ok( // don't work well
                     clubPlayerService.getPlayers(nameContaining, clubNameContaining, ageMin, ageMax, page, pageSize)
             );
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+//            return ResponseEntity.status(500).body(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
