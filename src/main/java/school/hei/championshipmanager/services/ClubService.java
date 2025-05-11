@@ -3,6 +3,7 @@ package school.hei.championshipmanager.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.championshipmanager.dto.*;
+import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.mappers.ClubMapper;
 import school.hei.championshipmanager.mappers.ClubPlayerMapper;
 import school.hei.championshipmanager.model.Club;
@@ -40,8 +41,10 @@ public class ClubService {
     }
 
     public List<PlayerRest> getPlayers(String clubId, Integer page, Integer pageSize) {
-        if (clubRepo.getById(clubId) == null) {
-            return null;
+        Club club = clubRepo.getById(clubId);
+
+        if (club == null) {
+            throw new EntityNotFoundException(String.format("Club with id %s not found", clubId));
         }
 
         List<ClubPlayer> players = clubPlayerRepository.getAllByClubId(clubId, page, pageSize);

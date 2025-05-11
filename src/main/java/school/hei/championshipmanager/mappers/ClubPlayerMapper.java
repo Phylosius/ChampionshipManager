@@ -84,7 +84,7 @@ public class ClubPlayerMapper implements ModelRepositoryMapper<ClubPlayer> {
     }
 
     public PlayerRest toPlayerRest(ClubPlayer player) {
-        ClubPlayerRest dto = new ClubPlayerRest();
+        PlayerRest dto = new PlayerRest();
 
         dto.setId(player.getId());
         dto.setName(player.getName());

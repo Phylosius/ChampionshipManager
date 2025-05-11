@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import school.hei.championshipmanager.dto.ClubRest;
 import school.hei.championshipmanager.dto.ClubStatisticsRest;
 import school.hei.championshipmanager.dto.PlayerRest;
+import school.hei.championshipmanager.exeptions.EntityNotFoundException;
 import school.hei.championshipmanager.services.ClubService;
 
 @AllArgsConstructor
@@ -74,11 +75,9 @@ public class ClubRestController {
         try {
             List<PlayerRest> retrieved = clubService.getPlayers(id, page, pageSize);
 
-            if (retrieved == null) {
-                return ResponseEntity.status(404).body(String.format("Club with id %s not found", id));
-            }
-
             return ResponseEntity.ok(retrieved);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
