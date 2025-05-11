@@ -132,15 +132,13 @@ public class ClubMapper implements ModelRepositoryMapper<Club> {
                         clubPlayerRepository, playerStatsRepo, playerScoreRepo,
                         seasonRepo)
         );
-        stats.setDifferenceGoals(
-                club.getStat(matches, MatchStatType.DIFFERENCE_GOAL,
-                        clubPlayerRepository, playerStatsRepo, playerScoreRepo,
-                        seasonRepo)
-        );
         stats.setConcededGoals(
                 club.getStat(matches, MatchStatType.CONCEDED_GOAL,
                         clubPlayerRepository, playerStatsRepo, playerScoreRepo,
                         seasonRepo)
+        );
+        stats.setDifferenceGoals(
+                stats.getScoredGoals() - stats.getConcededGoals()
         );
         stats.setCleanSheetNumber(
                 club.getStat(matches, MatchStatType.CLEAN_SHEET_POINT,

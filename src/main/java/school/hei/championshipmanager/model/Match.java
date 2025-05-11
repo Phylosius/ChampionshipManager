@@ -53,20 +53,24 @@ public class Match {
         Integer ownGoals = own.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
                 getSeason(seasonRepo).getYear(), id, true);
 
+        Integer ownFakeGoals = own.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                getSeason(seasonRepo).getYear(), id, false) - ownGoals;
+
         Integer advGoals = adv.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
                 getSeason(seasonRepo).getYear(), id, true);
 
+        Integer advFakeGoals = adv.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
+                getSeason(seasonRepo).getYear(), id, false) - advGoals;
+
         if (type == MatchStatType.RANKING_POINT){
-            return getPoint(ownGoals, advGoals);
+            return getPoint((ownGoals + advFakeGoals), (advGoals + ownFakeGoals));
         } else if (type == MatchStatType.SCORED_GOAL) {
             return ownGoals;
         } else if (type == MatchStatType.DIFFERENCE_GOAL){
             return ownGoals - advGoals;
         } else if (type == MatchStatType.CONCEDED_GOAL) {
-            Integer fakeGoals = own.getScoredGoals(clubPlayerRepository, playerStatsRepo, playerScoreRepo,
-                    getSeason(seasonRepo).getYear(), id, false) - ownGoals;
 
-            return advGoals + fakeGoals;
+            return advGoals + ownFakeGoals;
         } else if (type == MatchStatType.CLEAN_SHEET_POINT) {
             return getCleanSheetPoint(advGoals);
         } else {

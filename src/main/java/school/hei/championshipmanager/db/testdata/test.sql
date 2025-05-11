@@ -99,7 +99,6 @@ VALUES
        ('S2025-2026-EPL-C1vsC2', 'defense1', 60, false),
 
        ('S2025-2026-EPL-C2vsC3', 'attaquant3', 21, false),
-       ('S2025-2026-EPL-C2vsC3', 'attaquant2', 88, false),
 
        ('S2025-2026-EPL-C1vsC3', 'attaquant1', 69, false),
 
