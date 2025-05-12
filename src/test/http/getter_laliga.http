@@ -44,7 +44,7 @@ GET {{baseUrl}}/matches/2024?
 Accept: application/json
 
 #### GET /matches/{seasonYear} ✅ filtered by club name
-GET {{baseUrl}}/matches/2025?
+GET {{baseUrl}}/matches/2024?
     clubPlayingName=5
 Accept: application/json
 
@@ -53,6 +53,6 @@ GET {{baseUrl}}/clubs/statistics/2024?
     hasToBeClassified=true
 Accept: application/json
 
-### GET /clubs/statistics/{seasonYear} ✅ 2025 not classified
-GET {{baseUrl}}/clubs/statistics/2025
+### GET /clubs/statistics/{seasonYear} ✅ 2024 not classified
+GET {{baseUrl}}/clubs/statistics/2024
 Accept: application/json

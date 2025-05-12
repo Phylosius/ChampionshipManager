@@ -123,14 +123,61 @@ VALUES ('S2024-2025-LALIGA-C4vsC5', 'gardien4', 32400),
        ('S2024-2025-LALIGA-C4vsC5', 'milieu4', 31400),
        ('S2024-2025-LALIGA-C4vsC5', 'attaquant4', 32400),
 
+       ('S2024-2025-LALIGA-C5vsC4', 'gardien4', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'defense4', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'milieu4', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'attaquant4', 0),
+
+       ('S2024-2025-LALIGA-C4vsC6', 'gardien4', 0),
+       ('S2024-2025-LALIGA-C4vsC6', 'defense4', 0),
+       ('S2024-2025-LALIGA-C4vsC6', 'milieu4', 0),
+       ('S2024-2025-LALIGA-C4vsC6', 'attaquant4', 0),
+
+       ('S2024-2025-LALIGA-C6vsC4', 'gardien4', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'defense4', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'milieu4', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'attaquant4', 0),
+
+
        ('S2024-2025-LALIGA-C4vsC5', 'gardien5', 32400),
        ('S2024-2025-LALIGA-C4vsC5', 'defense5', 32400),
        ('S2024-2025-LALIGA-C4vsC5', 'milieu5', 32400),
        ('S2024-2025-LALIGA-C4vsC5', 'attaquant5', 32400),
 
+       ('S2024-2025-LALIGA-C5vsC4', 'gardien5', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'defense5', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'milieu5', 0),
+       ('S2024-2025-LALIGA-C5vsC4', 'attaquant5', 0),
+
+       ('S2024-2025-LALIGA-C6vsC5', 'gardien5', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'defense5', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'milieu5', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'attaquant5', 0),
+
+       ('S2024-2025-LALIGA-C5vsC6', 'gardien5', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'defense5', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'milieu5', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'attaquant5', 0),
+
+
        ('S2024-2025-LALIGA-C4vsC6', 'gardien6', 32400),
        ('S2024-2025-LALIGA-C4vsC6', 'defense6', 32400),
        ('S2024-2025-LALIGA-C4vsC6', 'milieu6', 32400),
-       ('S2024-2025-LALIGA-C4vsC6', 'attaquant6', 32400);
+       ('S2024-2025-LALIGA-C4vsC6', 'attaquant6', 32400),
+
+       ('S2024-2025-LALIGA-C6vsC4', 'gardien6', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'defense6', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'milieu6', 0),
+       ('S2024-2025-LALIGA-C6vsC4', 'attaquant6', 0),
+
+       ('S2024-2025-LALIGA-C5vsC6', 'gardien6', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'defense6', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'milieu6', 0),
+       ('S2024-2025-LALIGA-C5vsC6', 'attaquant6', 0),
+
+       ('S2024-2025-LALIGA-C6vsC5', 'gardien6', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'defense6', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'milieu6', 0),
+       ('S2024-2025-LALIGA-C6vsC5', 'attaquant6', 0);
 
 
