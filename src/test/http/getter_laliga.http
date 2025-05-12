@@ -1,0 +1,58 @@
+### GET /players ✅ filter by name and club name
+GET {{baseUrl}}/players?
+    name=ie&
+    clubNameContaining=Club 4
+Accept: application/json
+
+### GET /players ✅ filter by age
+GET {{baseUrl}}/players?
+    ageMinimum=25&
+    ageMaximum=30
+Accept: application/json
+
+### GET /players/{id}/statistics/{seasonYear} ✅
+GET {{baseUrl}}/players/attaquant4/statistics/2024
+Accept: application/json
+
+### GET /players/{id}/statistics/{seasonYear} ✅ duration in MINUTE
+GET {{baseUrl}}/players/attaquant4/statistics/2024?
+    durationUnit=MINUTE
+Accept: application/json
+
+### GET /players/{id}/statistics/{seasonYear} ✅ duration in HOUR
+GET {{baseUrl}}/players/attaquant4/statistics/2024?
+    durationUnit=HOUR
+Accept: application/json
+
+### GET /players/{id}/statistics/{seasonYear} ✅ not found
+GET {{baseUrl}}/players/daniel/statistics/2024?
+    durationUnit=HOUR
+Accept: application/json
+
+### GET /clubs ✅
+GET {{baseUrl}}/clubs
+Accept: application/json
+
+### GET /clubs/{id}/players ✅
+GET {{baseUrl}}/clubs/C4/players
+Accept: application/json
+
+### GET /matches/{seasonYear} ✅ filtered by date
+GET {{baseUrl}}/matches/2024?
+    matchAfter=2024-08-02T17:00:00&
+    matchBeforeOrEquals=2024-08-05T18:00:00
+Accept: application/json
+
+#### GET /matches/{seasonYear} ✅ filtered by club name
+GET {{baseUrl}}/matches/2025?
+    clubPlayingName=5
+Accept: application/json
+
+### GET /clubs/statistics/{seasonYear} ✅ 2024 classified
+GET {{baseUrl}}/clubs/statistics/2024?
+    hasToBeClassified=true
+Accept: application/json
+
+### GET /clubs/statistics/{seasonYear} ✅ 2025 not classified
+GET {{baseUrl}}/clubs/statistics/2025
+Accept: application/json
